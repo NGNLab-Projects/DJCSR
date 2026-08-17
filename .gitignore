@@ -1,0 +1,33 @@
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# PyTorch / Model checkpoints
+*.pt
+*.pth
+*.onnx
+*.safetensors
+
+# Jupyter & Jupytext
+.ipynb_checkpoints/
+*.ipynb
+
+# Output plots, logs, data
+*.png
+*.pdf
+*.svg
+*.csv
+*.log
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Virtual Environments
+venv/
+env/
+.venv/
