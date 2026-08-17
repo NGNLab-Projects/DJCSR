@@ -1,11 +1,13 @@
-# Subcarrier Allocation O-RAN xAPP via D3QN
+# PRB Allocation O-RAN xAPP via D3QN
 
 ![O-RAN xApp](https://img.shields.io/badge/O--RAN-Near--RT%20RIC%20xApp-blue.svg)
+![FlexRIC](https://img.shields.io/badge/FlexRIC-E2AP%20v2.0-orange.svg)
+![OpenAirInterface](https://img.shields.io/badge/OAI-5G%20NR-red.svg)
 ![Python](https://img.shields.io/badge/Python-3.9%2B-green.svg)
 ![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-ee4c2c.svg)
 ![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)
 
-An Open RAN (O-RAN) Near-Real-Time RIC xApp for **Dynamic Physical Resource Block (PRB) Allocation** in 5G/6G Integrated Sensing and Communication (ISAC) networks using **Deep Dueling Double Q-Networks (D3QN)**.
+An Open RAN (O-RAN) Near-Real-Time RIC xApp for **Dynamic Physical Resource Block (PRB) Allocation** in 5G/6G Integrated Sensing and Communication (ISAC) networks using **Deep Dueling Double Q-Networks (D3QN)**, integrated with **OpenAirInterface (OAI)** and **FlexRIC**.
 
 ---
 
@@ -13,7 +15,7 @@ An Open RAN (O-RAN) Near-Real-Time RIC xApp for **Dynamic Physical Resource Bloc
 
 As 5G-Advanced and 6G networks evolve toward **Integrated Sensing and Communication (ISAC)**, base stations (gNBs) must dynamically share spectrum and radio resource blocks (PRBs) between target radar sensing and multi-tenant communication services (**eMBB** and **URLLC**).
 
-This xApp runs on the **Near-RT RIC (RAN Intelligent Controller)** to optimize resource allocation policies over the E2 interface, ensuring:
+This repository contains both standalone simulation models and complete **OAI / FlexRIC xApp** integration to control radio resources over the E2 interface:
 - **Radar Target Sensing**: Maximizing the Fisher Information Matrix (FIM) for high-precision range/velocity tracking.
 - **eMBB Slicing**: Maximizing aggregate data throughput.
 - **URLLC Slicing**: Guaranteeing sub-10ms ultra-reliable low-latency communications.
@@ -22,10 +24,11 @@ This xApp runs on the **Near-RT RIC (RAN Intelligent Controller)** to optimize r
 
 ## 🚀 Key Features
 
-- **D3QN Reinforcement Learning**: Combines Dueling Q-Network architecture with Double DQN updating to eliminate Q-value overestimation.
-- **ISAC Simulation Environment**: 3GPP-aligned numerology (Band n78, 30 kHz SCS, 23.4 MHz bandwidth) with multi-gNB Uniform Linear Arrays (ULA).
-- **Dynamic PRB Splitting**: Adaptive partitioning of subcarriers across radar sensing, URLLC, and eMBB slices.
-- **Custom Multi-Objective Reward Function**: Balanced formulation combining FIM, throughput, and latency constraints.
+- **D3QN Reinforcement Learning**: Dueling Q-Network architecture with Double DQN updating for optimal slice management.
+- **FlexRIC & OAI E2 Integration**: `isac_xapp.py` interfaces with FlexRIC SDK (`xapp_sdk`) to control gNB MAC/KPM service models over E2AP.
+- **Multi-gNB RFSimulator Topology**: `launch_topology.py` automates launching 3 gNBs and 10 UEs using OAI RFSimulator.
+- **Traffic Generator**: `generate_traffic.sh` handles automated iperf3 and ping traffic generation for eMBB and URLLC evaluation.
+- **Python / Jupyter Simulation Suite**: `Jupyter_Python/` directory contains standalone simulation scripts (`environment.py`, `agent.py`, `train.py`).
 
 ---
 
@@ -33,11 +36,16 @@ This xApp runs on the **Near-RT RIC (RAN Intelligent Controller)** to optimize r
 
 ```
 PRB_Allocation_O-RAN_xAPP/
-├── environment.py   # 5G ISAC Network Environment (Channel models, FIM, QoS metrics)
-├── agent.py         # D3QN Agent implementation (Dueling Deep Q-Network, Replay Buffer)
-├── train.py         # Training loop & performance metric evaluation script
-├── .gitignore       # Git ignore rules for Python & PyTorch artifacts
-└── README.md        # Project documentation
+├── represents/
+│   ├── isac_xapp.py          # OAI FlexRIC E2 xApp D3QN Controller
+│   ├── launch_topology.py    # OAI 5G NR RFSimulator Multi-gNB & UE launcher
+│   └── generate_traffic.sh   # iperf3 & ping traffic generator script
+├── Jupyter_Python/
+│   ├── environment.py        # 5G ISAC Network Simulation Environment
+│   ├── agent.py              # D3QN Agent (Dueling Network, Replay Buffer)
+│   └── train.py              # Training loop & evaluation script
+├── .gitignore                # Git ignore rules
+└── README.md                 # Project documentation
 ```
 
 ---
@@ -47,7 +55,7 @@ PRB_Allocation_O-RAN_xAPP/
 | Parameter | Value | Description |
 | :--- | :--- | :--- |
 | **gNB Topology** | 3 Base Stations | Line layout spaced 500m apart |
-| **Antennas ($N_t$)** | 8 per gNB | Uniform Linear Array (ULA) with Maximum Ratio Transmission (MRT) |
+| **Antennas ($N_t$)** | 8 per gNB | Uniform Linear Array (ULA) with MRT beamforming |
 | **Carrier Frequency ($f_c$)** | 3.5 GHz | 3GPP NR Band n78 |
 | **Subcarrier Spacing ($SCS$)** | 30 kHz | Numerology $\mu = 1$ |
 | **Total Subcarriers ($N_{sc}$)** | 780 | Total bandwidth $\approx 23.4$ MHz |
@@ -58,27 +66,29 @@ PRB_Allocation_O-RAN_xAPP/
 
 ## 💻 Quick Start
 
-### 1. Requirements
+### 1. Standalone Python Training
 
-Ensure Python 3.9+ is installed along with the required libraries:
-
-```bash
-pip install numpy torch matplotlib
-```
-
-### 2. Run Training
-
-To train the D3QN xApp agent and evaluate resource allocation performance:
+To train the D3QN xApp agent in a simulated environment:
 
 ```bash
+cd Jupyter_Python
 python train.py
 ```
 
----
+### 2. OAI FlexRIC Deployment
 
-## 🤝 Contributing
+To run the live xApp on an OpenAirInterface Near-RT RIC testbed:
 
-Contributions, issues, and feature requests are welcome! Feel free to check the issues page or submit a pull request.
+```bash
+# 1. Launch network topology (3 gNBs + 10 UEs)
+python launch_topology.py
+
+# 2. Start traffic generation
+bash generate_traffic.sh
+
+# 3. Run the ISAC D3QN xApp Controller
+python isac_xapp.py
+```
 
 ---
 
