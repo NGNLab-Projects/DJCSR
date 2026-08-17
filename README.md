@@ -1,4 +1,4 @@
-# PRB Allocation O-RAN xAPP via D3QN
+# Subcarrier Allocation O-RAN xAPP via D3QN
 
 ![O-RAN xApp](https://img.shields.io/badge/O--RAN-Near--RT%20RIC%20xApp-blue.svg)
 ![Python](https://img.shields.io/badge/Python-3.9%2B-green.svg)
