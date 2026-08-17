@@ -44,7 +44,7 @@ PRB_Allocation_O-RAN_xAPP/
 | Parameter | Value | Description |
 | :--- | :--- | :--- |
 | **gNB Topology** | 3 Base Stations | Line layout spaced 500m apart |
-| **Antennas ($N_t$)** | 8 per gNB | Uniform Linear Array (ULA) with MRT beamforming |
+| **Antennas ($N_t$)** | 8 per gNB | Uniform Linear Array (ULA) |
 | **Carrier Frequency ($f_c$)** | 3.5 GHz | 3GPP NR Band n78 |
 | **Subcarrier Spacing ($SCS$)** | 30 kHz | Numerology $\mu = 1$ |
 | **Total Subcarriers ($N_{sc}$)** | 780 | Total bandwidth $\approx 23.4$ MHz |
