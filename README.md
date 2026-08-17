@@ -15,20 +15,9 @@ An Open RAN (O-RAN) Near-Real-Time RIC xApp for **Dynamic Physical Resource Bloc
 
 As 5G-Advanced and 6G networks evolve toward **Integrated Sensing and Communication (ISAC)**, base stations (gNBs) must dynamically share spectrum and radio resource blocks (PRBs) between target radar sensing and multi-tenant communication services (**eMBB** and **URLLC**).
 
-This repository contains both standalone simulation models and complete **OAI / FlexRIC xApp** integration to control radio resources over the E2 interface:
-- **Radar Target Sensing**: Maximizing the Fisher Information Matrix (FIM) for high-precision range/velocity tracking.
-- **eMBB Slicing**: Maximizing aggregate data throughput.
-- **URLLC Slicing**: Guaranteeing sub-10ms ultra-reliable low-latency communications.
-
----
-
-## 🚀 Key Features
-
-- **D3QN Reinforcement Learning**: Dueling Q-Network architecture with Double DQN updating for optimal slice management.
-- **FlexRIC & OAI E2 Integration**: `isac_xapp.py` interfaces with FlexRIC SDK (`xapp_sdk`) to control gNB MAC/KPM service models over E2AP.
-- **Multi-gNB RFSimulator Topology**: `launch_topology.py` automates launching 3 gNBs and 10 UEs using OAI RFSimulator.
-- **Traffic Generator**: `generate_traffic.sh` handles automated iperf3 and ping traffic generation for eMBB and URLLC evaluation.
-- **Python / Jupyter Simulation Suite**: `Jupyter_Python/` directory contains standalone simulation scripts (`environment.py`, `agent.py`, `train.py`).
+This repository contains two main sub-trees:
+1. **`Jupyter_Python/`**: Standalone D3QN reinforcement learning simulation suite.
+2. **`OAI_FlexRIC_ISAC_xAPP/`**: Live OpenAirInterface (OAI) & FlexRIC E2AP xApp deployment scripts.
 
 ---
 
@@ -36,14 +25,14 @@ This repository contains both standalone simulation models and complete **OAI / 
 
 ```
 PRB_Allocation_O-RAN_xAPP/
-├── represents/
-│   ├── isac_xapp.py          # OAI FlexRIC E2 xApp D3QN Controller
-│   ├── launch_topology.py    # OAI 5G NR RFSimulator Multi-gNB & UE launcher
-│   └── generate_traffic.sh   # iperf3 & ping traffic generator script
 ├── Jupyter_Python/
-│   ├── environment.py        # 5G ISAC Network Simulation Environment
 │   ├── agent.py              # D3QN Agent (Dueling Network, Replay Buffer)
+│   ├── environment.py        # 5G ISAC Network Simulation Environment
 │   └── train.py              # Training loop & evaluation script
+├── OAI_FlexRIC_ISAC_xAPP/
+│   ├── generate_traffic.sh   # iperf3 & ping traffic generator script
+│   ├── isac_xapp.py          # OAI FlexRIC E2 xApp D3QN Controller
+│   └── launch_topology.py    # OAI 5G NR RFSimulator Multi-gNB & UE launcher
 ├── .gitignore                # Git ignore rules
 └── README.md                 # Project documentation
 ```
@@ -66,7 +55,7 @@ PRB_Allocation_O-RAN_xAPP/
 
 ## 💻 Quick Start
 
-### 1. Standalone Python Training
+### 1. Standalone Python Simulation (`Jupyter_Python/`)
 
 To train the D3QN xApp agent in a simulated environment:
 
@@ -75,11 +64,13 @@ cd Jupyter_Python
 python train.py
 ```
 
-### 2. OAI FlexRIC Deployment
+### 2. OAI FlexRIC Deployment (`OAI_FlexRIC_ISAC_xAPP/`)
 
 To run the live xApp on an OpenAirInterface Near-RT RIC testbed:
 
 ```bash
+cd OAI_FlexRIC_ISAC_xAPP
+
 # 1. Launch network topology (3 gNBs + 10 UEs)
 python launch_topology.py
 
