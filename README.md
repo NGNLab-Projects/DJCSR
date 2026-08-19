@@ -25,7 +25,7 @@ This repository contains two main sub-trees:
 
 ```
 PRB_Allocation_O-RAN_xAPP
-├── Train Model
+├── **`Train Model`**
 │   ├── agent.py              # D3QN Agent (Dueling Network, Replay Buffer)
 │   ├── environment.py        # 5G ISAC Network Simulation Environment
 │   └── train.py              # Training loop & evaluation script
