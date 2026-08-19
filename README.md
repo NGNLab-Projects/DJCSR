@@ -69,30 +69,39 @@ python train.py
 To validate the trained `d3qn_isac_final.pth` model on a live OpenAirInterface (OAI) & FlexRIC Near-RT RIC testbed, execute the following steps in sequence:
 
 #### Step 1: Start 5G Core Network (OAI CN)
-
+```bash
 cd ~/openairinterface5g/oai-workshops/cn
 docker compose up -d
 docker ps
-
+```
 #### Step 2: Launch Near-RT RIC (FlexRIC)
+```bash
 sudo ~/openairinterface5g/openair2/E2AP/flexric/build/examples/ric/nearRT-RIC
+```
 
 #### Step 3: Launch Network Topology (3 gNBs + 10 UEs)
+```bash
 cd ~/openairinterface5g
 sudo python3 launch_topology.py
+```
 
 #### Step 4: Generate Background Traffic (eMBB + URLLC)
+```bash
 sudo bash generate_traffic.sh
+```
 
 #### Step 5: Run ISAC xApp Controller
 Run the xApp controller to perform real-time E2 control using the trained D3QN policy:
+```bash
 cd ~/openairinterface5g/openair2/E2AP/flexric/examples/xApp/python3/isac_xapp.py
+```
 
 #### Step 6: Plot & Verify Testbed Results
 Generate throughput, latency, and sensing accuracy plots from metrics.csv:
+```bash
 cd ~/openairinterface5g
 python3 plot_metrics.py
-
+```
 ---
 
 ## 📄 License
