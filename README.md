@@ -64,7 +64,7 @@ python train.py
 # Output: d3qn_isac_final.pth
 ```
 
-### 2. OAI / FlexRIC Testbed Validation
+### 2. OAI / FlexRIC (Testbed Validation)
 
 To validate the trained `d3qn_isac_final.pth` model on a live OpenAirInterface (OAI) & FlexRIC Near-RT RIC testbed, execute the following steps in sequence:
 
