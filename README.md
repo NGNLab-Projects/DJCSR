@@ -1,4 +1,4 @@
-# Resource optimization in O-RAN via D3QN
+# Resource Optimization in O-RAN via D3QN
 
 ![O-RAN xApp](https://img.shields.io/badge/O--RAN-Near--RT%20RIC%20xApp-blue.svg)
 ![FlexRIC](https://img.shields.io/badge/FlexRIC-E2AP%20v2.0-orange.svg)
@@ -55,13 +55,13 @@ PRB_Allocation_O-RAN_xAPP/
 
 ## 💻 Quick Start
 
-### 1. Standalone Python Simulation (`Jupyter_Python/`)
-
-To train the D3QN xApp agent in a simulated environment:
+### Step 1: Train Model (Simulation)
+Train the D3QN agent using `environment.py` and `agent.py` within `Jupyter_Python/`:
 
 ```bash
 cd Jupyter_Python
 python train.py
+# Output: d3qn_isac_final.pth
 ```
 
 ### 2. OAI FlexRIC Deployment (`OAI_FlexRIC_ISAC_xAPP/`)
@@ -71,13 +71,13 @@ To run the live xApp on an OpenAirInterface Near-RT RIC testbed:
 ```bash
 cd OAI_FlexRIC_ISAC_xAPP
 
-# 1. Launch network topology (3 gNBs + 10 UEs)
+# Step 1: Launch network topology (3 gNBs + 10 UEs)
 python launch_topology.py
 
-# 2. Start traffic generation
+# Step 2: Generate eMBB and URLLC background traffic
 bash generate_traffic.sh
 
-# 3. Run the ISAC D3QN xApp Controller
+# Step 3: Run the D3QN xApp Controller (Loads d3qn_isac_final.pth for live E2 inference)
 python isac_xapp.py
 ```
 
