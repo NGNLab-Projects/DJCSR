@@ -64,7 +64,7 @@ python train.py
 # Output: d3qn_isac_final.pth
 ```
 
-### 2. OAI FlexRIC Deployment (`OAI_FlexRIC_ISAC_xAPP/`)
+### 2. OAI FlexRIC Deployment (Testbed validation)
 
 To run the live xApp on an OpenAirInterface Near-RT RIC testbed:
 
