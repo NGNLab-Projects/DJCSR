@@ -1,4 +1,4 @@
-# PRB Allocation O-RAN xAPP via D3QN
+# Resource optimization in O-RAN xAPP via D3QN
 
 ![O-RAN xApp](https://img.shields.io/badge/O--RAN-Near--RT%20RIC%20xApp-blue.svg)
 ![FlexRIC](https://img.shields.io/badge/FlexRIC-E2AP%20v2.0-orange.svg)
