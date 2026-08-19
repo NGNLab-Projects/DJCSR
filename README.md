@@ -55,7 +55,7 @@ PRB_Allocation_O-RAN_xAPP/
 
 ## 💻 Quick Start
 
-### Step 1: Train Model (Simulation)
+### 1: Train Model (Simulation)
 The simulation pipeline uses `environment.py` (ISAC Environment) and `agent.py` (D3QN Architecture) to train the resource allocation policy.
 
 ```bash
@@ -69,7 +69,7 @@ python train.py
 To validate the trained `d3qn_isac_final.pth` model on a live OpenAirInterface (OAI) & FlexRIC Near-RT RIC testbed, execute the following steps in sequence:
 
 #### Step 1: Start 5G Core Network (OAI CN)
-```bash
+
 cd ~/openairinterface5g/oai-workshops/cn
 docker compose up -d
 docker ps
@@ -92,7 +92,6 @@ cd ~/openairinterface5g/openair2/E2AP/flexric/examples/xApp/python3/isac_xapp.py
 Generate throughput, latency, and sensing accuracy plots from metrics.csv:
 cd ~/openairinterface5g
 python3 plot_metrics.py
-```
 
 ---
 
