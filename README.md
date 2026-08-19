@@ -108,10 +108,10 @@ python3 plot_metrics.py
 1. **eMBB Throughput (+31.0% Gain)**:
    - DJCSR dynamically adapts subcarrier allocation ratios ($\rho$) and transmit power budgets ($p$), yielding a **31% throughput increase** over conventional DQN while consistently exceeding the **60 Mbps QoS target**.
 2. **URLLC Latency (-16.7% Reduction)**:
-   - Priority-aware PRB partitioning reduces median URLLC latency to **3.93 ms** (a **16.7% reduction** over DQN), strictly enforcing the **< 5 ms ultra-low latency constraint** under dynamic traffic bursts.
-3. **Sub-Meter Sensing Accuracy ($0.184\text{ m}$ Sim / $0.052\text{ m}$ Testbed)**:
-   - By joint optimization of sensing subcarrier interleaved spacing ($\Delta_s$), DJCSR achieves an average range estimation RMSE of **0.184 m** in simulation and converges to **0.052 m ($5.2\text{ cm}$)** on live FlexRIC/OAI hardware.
----
+   - Dynamic subcarrier allocation ratios ($\rho$) and joint power splitting ($p$) optimize resource assignment to maintain median URLLC latency at **3.93 ms** (a **16.7% reduction** over DQN), strictly enforcing the **< 5 ms ultra-low latency constraint** under dynamic traffic bursts.
+3. **Sensing Accuracy ($0.184\text{ m}$)**:
+   - By joint optimization of sensing subcarrier interleaved spacing ($\Delta_s$), DJCSR achieves an average range estimation RMSE of **0.184 m**.
+
 #### 🏁 Conclusion
 - **Adaptive Joint Resource Allocation**: DJCSR successfully resolves the fundamental trade-off between communication Quality-of-Service (QoS) and radar sensing precision in multi-cell 6G ISAC networks.
 - **Hardware Feasibility**: Real-time E2 control loop validation on the FlexRIC Near-RT RIC and OpenAirInterface (OAI) gNB testbed confirms that D3QN-driven xApps operate seamlessly within sub-10ms Near-RT RIC decision epochs.
