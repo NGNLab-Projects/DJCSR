@@ -55,7 +55,7 @@ PRB_Allocation_O-RAN_xAPP/
 
 ## 💻 Quick Start
 
-### 1: Train Model (Simulation)
+### 1. Train Model (Simulation)
 The simulation pipeline uses `environment.py` (ISAC Environment) and `agent.py` (D3QN Architecture) to train the resource allocation policy.
 
 ```bash
