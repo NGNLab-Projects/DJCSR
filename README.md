@@ -48,7 +48,7 @@ PRB_Allocation_O-RAN_xAPP/
 | **Carrier Frequency ($f_c$)** | 3.5 GHz | 3GPP NR Band n78 |
 | **Subcarrier Spacing ($SCS$)** | 30 kHz | Numerology $\mu = 1$ |
 | **Total Subcarriers ($N_{sc}$)** | 780 | Total bandwidth $\approx 23.4$ MHz |
-| **URLLC Users** | 5 UEs | Latency target: $<10$ ms |
+| **URLLC Users** | 5 UEs | Latency target: $<5$ ms |
 | **eMBB Users** | 5 UEs | High throughput demand |
 
 ---
