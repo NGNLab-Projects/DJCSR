@@ -109,7 +109,7 @@ python3 plot_metrics.py
    - DJCSR dynamically adapts subcarrier allocation ratios ($\rho$) and transmit power budgets ($p$), yielding a **31% throughput increase** over conventional DQN while consistently exceeding the **60 Mbps QoS target**.
 2. **URLLC Latency (-16.7% Reduction)**:
    - Dynamic subcarrier allocation ratios ($\rho$) and joint power splitting ($p$) optimize resource assignment to maintain median URLLC latency at **3.93 ms** (a **16.7% reduction** over DQN), strictly enforcing the **< 5 ms ultra-low latency constraint** under dynamic traffic bursts.
-3. **Sensing Accuracy ($0.184\text{ m}$)**:
+3. **Sensing Accuracy (0.184 m)**:
    - By joint optimization of sensing subcarrier interleaved spacing ($\Delta_s$), DJCSR achieves an average range estimation RMSE of **0.184 m**.
 
 #### 🏁 Conclusion
