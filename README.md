@@ -16,8 +16,8 @@ An Open RAN (O-RAN) Near-Real-Time RIC xApp for **Dynamic Subcarrier Allocation*
 As 5G-Advanced and 6G networks evolve toward **Integrated Sensing and Communication (ISAC)**, base stations (gNBs) must dynamically share spectrum and subcarriers between target radar sensing and multi-tenant communication services (**eMBB** and **URLLC**).
 
 This repository contains two main sub-trees:
-1. **`Jupyter_Python/`**: Standalone D3QN reinforcement learning simulation suite.
-2. **`OAI_FlexRIC_ISAC_xAPP/`**: Live OpenAirInterface (OAI) & FlexRIC E2AP xApp deployment scripts.
+1. **`Train Model/`**: Standalone D3QN reinforcement learning simulation suite.
+2. **`OAI_FlexRIC/`**: Live OpenAirInterface (OAI) & FlexRIC E2AP xApp deployment scripts.
 
 ---
 
@@ -25,11 +25,11 @@ This repository contains two main sub-trees:
 
 ```
 PRB_Allocation_O-RAN_xAPP/
-├── Jupyter_Python/
+├── Train Model/
 │   ├── agent.py              # D3QN Agent (Dueling Network, Replay Buffer)
 │   ├── environment.py        # 5G ISAC Network Simulation Environment
 │   └── train.py              # Training loop & evaluation script
-├── OAI_FlexRIC_ISAC_xAPP/
+├── OAI_FlexRIC/
 │   ├── generate_traffic.sh   # iperf3 & ping traffic generator script
 │   ├── isac_xapp.py          # OAI FlexRIC E2 xApp D3QN Controller
 │   └── launch_topology.py    # OAI 5G NR RFSimulator Multi-gNB & UE launcher
