@@ -13,7 +13,7 @@ An Open RAN (O-RAN) Near-Real-Time RIC xApp for **Dynamic Subcarrier Allocation*
 
 ## 📌 Overview
 
-As 5G-Advanced and 6G networks evolve toward **Integrated Sensing and Communication (ISAC)**, base stations (gNBs) must dynamically share spectrum and radio resource blocks (PRBs) between target radar sensing and multi-tenant communication services (**eMBB** and **URLLC**).
+As 5G-Advanced and 6G networks evolve toward **Integrated Sensing and Communication (ISAC)**, base stations (gNBs) must dynamically share spectrum and subcarriers between target radar sensing and multi-tenant communication services (**eMBB** and **URLLC**).
 
 This repository contains two main sub-trees:
 1. **`Jupyter_Python/`**: Standalone D3QN reinforcement learning simulation suite.
