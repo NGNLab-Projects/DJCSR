@@ -56,7 +56,7 @@ PRB_Allocation_O-RAN_xAPP/
 ## 💻 Quick Start
 
 ### Step 1: Train Model (Simulation)
-Train the D3QN agent using `environment.py` and `agent.py` within `Jupyter_Python/`:
+The simulation pipeline uses `environment.py` (ISAC RAN environment) and `agent.py` (D3QN architecture) to train the allocation policy.
 
 ```bash
 cd Jupyter_Python
