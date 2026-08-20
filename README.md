@@ -74,9 +74,9 @@ pip install -r requirements.txt
 	 
 ### 2. How to Install Docker
 	- Uninstall any old or conflicting Docker packages:  
-```bash
+	```bash
 	sudo apt-get remove -y docker docker-engine docker.io containerd runc
-```
+	```
 	- Update package index and install prerequisite tools:  
 ```bash
 	sudo apt-get update
