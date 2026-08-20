@@ -56,50 +56,45 @@ PRB_Allocation_O-RAN_xAPP
 ## 🛠️ System Requirements
 The requirements.txt file includes all required libraries for running DJCSR (1. Train Model) and the FlexRIC Python xApp (2. OAI_FlexRIC):
 ### 1. Python 3 Requirements
-   Deep Reinforcement Learning & ML Frameworks: 
+   Deep Reinforcement Learning & ML Frameworks:  
 	torch>=2.0.0, torchvision, torchaudio, gymnasium>=0.28.1, gym>=0.26.0
-   Numerical & Signal Processing: 
+   Numerical & Signal Processing:  
 	numpy>=1.22.0,<2.0.0, scipy>=1.8.0
-   Data Logging & Analysis: 
+   Data Logging & Analysis:  
 	pandas>=1.4.0, h5py>=3.6.0
-   Visualization: 
+   Visualization:  
 	matplotlib>=3.5.0, seaborn>=0.11.2, tensorboard>=2.10.0
-   FlexRIC SWIG/Python Bindings & Utilities: 
+   FlexRIC SWIG/Python Bindings & Utilities:  
 	cffi>=1.15.0, pyyaml>=6.0, pydantic>=1.10.0, requests>=2.28.0
-### 2. How to Install OAI & FlexRIC
-   System Build Prerequisites (Ubuntu 20.04/22.04 LTS)
+
+### 2. How to Install Docker
+
+### 3. How to Install [OAI]() & [FlexRIC]()
+   #### System Build Prerequisites (Ubuntu 20.04/22.04 LTS)
    ```bash
    sudo apt update && sudo apt install -y \
     build-essential cmake ninja-build gcc g++ git bison flex swig \
     python3-dev python3-pip python3-numpy libsctp-dev libasn1c-dev ccache pcre2-utils
    ```
-   Installing FlexRIC (O-RAN Near-RT RIC)
-   ```bash
-   cd ~
-   git clone https://gitlab.eurecom.fr/oai/flexric.git
-   cd flexric
-   mkdir -p build && cd build
-   cmake -DXAPP_MULTACELL=ON -DXAPP_PYTHON3=ON ..
-   make -j$(nproc)
-   sudo make install
-   ```
-   Installing OpenAirInterface 5G (OAI gNB with E2 Agent)
-   ```bash
-   cd ~
-   git clone https://gitlab.eurecom.fr/oai/openairinterface5g.git
-   cd openairinterface5g/cmake_targets
-   ./build_oai -I
-   ./build_oai --gNB -w SIMU --e2 -c
-   ```
-### 3. Necessary Documents & Reference Links
-   - OAI FlexRIC Repository: FlexRIC GitLab
-   - OAI FlexRIC Python xApp Guide: FlexRIC Python 3 xApp Docs
-   - OpenAirInterface 5G E2 Agent Manual: OAI E2AP README
-   
-  #### O-RAN Alliance Working Group 3 (WG3) Specifications:
-      - O-RAN.WG3.E2AP: E2 Application Protocol Architecture
-      - O-RAN.WG3.E2SM-KPM: Key Performance Indicators Monitoring Service Model
-      - O-RAN.WG3.E2SM-RC / E2SM-MAC: RAN Control & MAC Scheduling Service Model
+   #### Installing FlexRIC (O-RAN Near-RT RIC)
+ 	**Build FlexRIC:** (Note: Requires gcc-12 as gcc-11 is not supported)
+	```bash
+	sudo apt-get update && sudo apt-get install -y gcc-12 g++-12
+	
+	git clone https://gitlab.eurecom.fr/mosaic5g/flexric.git
+	cd flexric/build
+	export CC=gcc-12
+	export CXX=g++-12
+	cmake ..
+	make -j$(nproc)
+	sudo make install
+	```
+   #### Installing OpenAirInterface 5G (OAI gNB with E2 Agent)
+	```bash
+	git clone https://gitlab.eurecom.fr/oai/openairinterface5g.git
+	cd cmake_targets
+	./build_oai -I -w SIMU --gNB --nrUE --build-e2 --ninja
+ 	```	
 ---
  
 ## 💻 Quick Start
@@ -119,18 +114,17 @@ To validate the trained `d3qn_isac_final.pth` model on a live OpenAirInterface (
 
 #### Step 1: Start 5G Core Network (OAI CN)
 ```bash
-cd ~/openairinterface5g/oai-workshops/cn
+cd ~/oai-workshops/cn
 docker compose up -d
 docker ps
 ```
 #### Step 2: Launch Near-RT RIC (FlexRIC)
 ```bash
-sudo ~/openairinterface5g/openair2/E2AP/flexric/build/examples/ric/nearRT-RIC
+sudo ~/openair2/E2AP/flexric/build/examples/ric/nearRT-RIC
 ```
 
 #### Step 3: Launch Network Topology (3 gNBs + 10 UEs)
 ```bash
-cd ~/openairinterface5g
 sudo python3 launch_topology.py
 ```
 
@@ -142,13 +136,12 @@ sudo bash generate_traffic.sh
 #### Step 5: Run ISAC xApp Controller
 Run the xApp controller to perform real-time E2 control using the trained D3QN policy:
 ```bash
-cd ~/openairinterface5g/openair2/E2AP/flexric/examples/xApp/python3/isac_xapp.py
+cd ~/openair2/E2AP/flexric/examples/xApp/python3/isac_xapp.py
 ```
 
 #### Step 6: Plot & Verify Testbed Results
 Generate throughput, latency, and sensing accuracy plots from metrics.csv:
 ```bash
-cd ~/openairinterface5g
 python3 plot_metrics.py
 ```
 ### 3. Results and Conclusion
