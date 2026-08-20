@@ -7,7 +7,7 @@
 ![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-ee4c2c.svg)
 ![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)
 
-An Open RAN (O-RAN) Near-Real-Time RIC xApp for **Dynamic Subcarrier Allocation** in 5G/6G Integrated Sensing and Communication (ISAC) networks using **Deep Dueling Double Q-Networks (D3QN)**, integrated with **OpenAirInterface (OAI)** and **FlexRIC**.
+An Open RAN (O-RAN) Near-Real-Time RIC xApp for **Dynamic Subcarrier Allocation** in 5G/6G Integrated Sensing and Communication (ISAC) networks using **DJCSR  (D3QN-Based Joint Communication–Sensing Resource Optimization) Framework** by **Deep Dueling Double Q-Networks (D3QN)**, integrated with **OpenAirInterface (OAI)** and **FlexRIC**.
 
 ---
 
