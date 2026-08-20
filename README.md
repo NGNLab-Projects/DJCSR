@@ -134,7 +134,7 @@ pip install -r requirements.txt
 	make -j$(nproc)
 	sudo make install
 	```
-   #### Installing OpenAirInterface 5G (OAI gNB with E2 Agent)
+- Installing OpenAirInterface 5G (OAI gNB with E2 Agent):  
 	```bash
 	git clone https://gitlab.eurecom.fr/oai/openairinterface5g.git
 	cd openairinterface5g
