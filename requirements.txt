@@ -1,0 +1,67 @@
+# ==============================================================================
+# DJCSR-Dynamic_Subcarrier_Allocation: Python 3 Requirements
+# ==============================================================================
+# Project: PRB & Dynamic Subcarrier Allocation O-RAN xApp using D3QN
+# Target Python Version: Python >= 3.8, < 3.12
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Deep Reinforcement Learning (D3QN) & Machine Learning Frameworks
+# ------------------------------------------------------------------------------
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+
+# Reinforcement Learning Environments & Utilities
+gymnasium>=0.28.1
+gym>=0.26.0
+
+# ------------------------------------------------------------------------------
+# 2. Numerical Computation, Math & Signal Processing
+# ------------------------------------------------------------------------------
+numpy>=1.22.0,<2.0.0
+scipy>=1.8.0
+
+# ------------------------------------------------------------------------------
+# 3. Data Processing, Logging & Analysis
+# ------------------------------------------------------------------------------
+pandas>=1.4.0
+h5py>=3.6.0
+
+# ------------------------------------------------------------------------------
+# 4. Visualization & Metric Monitoring
+# ------------------------------------------------------------------------------
+matplotlib>=3.5.0
+seaborn>=0.11.2
+tensorboard>=2.10.0
+
+# ------------------------------------------------------------------------------
+# 5. Inter-Process Communication & FlexRIC Python xApp Bindings
+# ------------------------------------------------------------------------------
+cffi>=1.15.0
+pyyaml>=6.0
+pydantic>=1.10.0
+requests>=2.28.0
+
+# ==============================================================================
+# SYSTEM PREREQUISITES (Ubuntu / Debian apt dependencies for OAI & FlexRIC)
+# ==============================================================================
+# Run the following shell command to install build & FlexRIC python tools:
+# 
+# sudo apt-get update && sudo apt-get install -y \
+#     build-essential \
+#     cmake \
+#     ninja-build \
+#     gcc g++ \
+#     git \
+#     bison \
+#     flex \
+#     swig \
+#     python3-dev \
+#     python3-pip \
+#     python3-numpy \
+#     libsctp-dev \
+#     libasn1c-dev \
+#     ccache \
+#     pcre2-utils
+# ==============================================================================
