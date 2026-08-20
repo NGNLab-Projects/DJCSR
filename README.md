@@ -74,39 +74,40 @@ pip install -r requirements.txt
 	 
 ### 2. How to Install Docker
 	- Uninstall any old or conflicting Docker packages  
-	```bash
+```bash
 	sudo apt-get remove -y docker docker-engine docker.io containerd runc
-	 ```
+```
 	- Update package index and install prerequisite tools  
-	```bash
+```bash
 	sudo apt-get update
 	sudo apt-get install -y ca-certificates curl gnupg lsb-release
-	 ```
+```
 	- Add Docker's official GPG key
-	```bash
+```bash
 	sudo mkdir -p /etc/apt/keyrings
 	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-	 ```
+```
 	- Set up the Docker stable repository  
-	```bash
+```bash
 	echo \
 	  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] 					https://download.docker.com/linux/ubuntu \
 	  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-	 ```
+```
 	- Install Docker Engine, CLI, Containerd, and Docker Compose Plugin  
-	```bash
+```bash
 	sudo apt-get update
 	sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-	 ```
+```
 	- Add current user to docker group (run Docker without sudo)  
-	```bash
+```bash
 	sudo usermod -aG docker $USER
-	 ```
+```
 	- Verify Docker installation  
-	```bash
+```bash
 	docker --version
 	docker compose version
-	 ```
+```
+
 ### 3. How to Install [OAI](https://gitlab.eurecom.fr/oai/openairinterface5g.git) & [FlexRIC](https://github.com/duranta-project/flexric)
    #### System Build Prerequisites (Ubuntu 20.04/22.04 LTS)
    ```bash
