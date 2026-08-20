@@ -71,7 +71,8 @@ The requirements.txt file includes all required libraries for running DJCSR (1. 
 ```bash
 pip install -r requirements.txt
 ```
-	 
+---
+
 ### 2. How to Install Docker
 - Uninstall any old or conflicting Docker packages:  
 ```bash
