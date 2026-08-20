@@ -105,9 +105,9 @@ pip install -r requirements.txt
 ### 3. How to Install [OAI](https://gitlab.eurecom.fr/oai/openairinterface5g.git) & [FlexRIC](https://github.com/duranta-project/flexric)
 - System Build Prerequisites (Ubuntu 20.04/22.04 LTS):  
 ```bash
-sudo apt update && sudo apt install -y \
-build-essential cmake ninja-build gcc g++ git bison flex swig \
-python3-dev python3-pip python3-numpy libsctp-dev libasn1c-dev ccache pcre2-utils
+	sudo apt update && sudo apt install -y \
+	build-essential cmake ninja-build gcc g++ git bison flex swig \
+	python3-dev python3-pip python3-numpy libsctp-dev libasn1c-dev ccache pcre2-utils
 ```
 - Installing FlexRIC (O-RAN Near-RT RIC):  
  	**Build FlexRIC:** (Note: Requires gcc-12 as gcc-11 is not supported)
