@@ -69,7 +69,7 @@ The requirements.txt file includes all required libraries for running DJCSR (1. 
 
 ### 2. How to Install Docker
 
-### 3. How to Install [OAI]() & [FlexRIC]()
+### 3. How to Install [OAI](https://gitlab.eurecom.fr/oai/openairinterface5g.git) & [FlexRIC]()
    #### System Build Prerequisites (Ubuntu 20.04/22.04 LTS)
    ```bash
    sudo apt update && sudo apt install -y \
