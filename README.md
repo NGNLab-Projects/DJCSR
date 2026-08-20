@@ -111,10 +111,10 @@ pip install -r requirements.txt
 ```
 - Installing FlexRIC (O-RAN Near-RT RIC):  
  	**Build FlexRIC:** (Note: Requires gcc-12 as gcc-11 is not supported)
-	```bash
 	##### 1. Install GCC-12 and G++-12
+	```bash
 	sudo apt-get update && sudo apt-get install -y gcc-12 g++-12
-	
+	 ```
 	##### 2. Clone FlexRIC Repository
 	git clone https://gitlab.eurecom.fr/mosaic5g/flexric.git
 	cd flexric
