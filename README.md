@@ -100,7 +100,6 @@ The requirements.txt file includes all required libraries for running DJCSR (1. 
       - O-RAN.WG3.E2AP: E2 Application Protocol Architecture
       - O-RAN.WG3.E2SM-KPM: Key Performance Indicators Monitoring Service Model
       - O-RAN.WG3.E2SM-RC / E2SM-MAC: RAN Control & MAC Scheduling Service Model
-```
 ---
  
 ## 💻 Quick Start
