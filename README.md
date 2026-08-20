@@ -67,9 +67,10 @@ The requirements.txt file includes all required libraries for running DJCSR (1. 
 		matplotlib>=3.5.0, seaborn>=0.11.2, tensorboard>=2.10.0
    - FlexRIC SWIG/Python Bindings & Utilities:  
 		cffi>=1.15.0, pyyaml>=6.0, pydantic>=1.10.0, requests>=2.28.0
-	```bash
-	pip install -r requirements.txt
-	 ```
+
+```bash
+pip install -r requirements.txt
+```
 	 
 ### 2. How to Install Docker
 	- Uninstall any old or conflicting Docker packages  
