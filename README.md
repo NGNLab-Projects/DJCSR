@@ -54,11 +54,8 @@ PRB_Allocation_O-RAN_xAPP
 ---
 
 ## 🛠️ System Requirements
-```
 The requirements.txt file includes all required libraries for running DJCSR (1. Train Model) and the FlexRIC Python xApp (2. OAI_FlexRIC):
-```
-## 1. Python 3 Requirements
-```
+### 1. Python 3 Requirements
    Deep Reinforcement Learning & ML Frameworks: 
 	torch>=2.0.0, torchvision, torchaudio, gymnasium>=0.28.1, gym>=0.26.0
    Numerical & Signal Processing: 
@@ -69,8 +66,7 @@ The requirements.txt file includes all required libraries for running DJCSR (1. 
 	matplotlib>=3.5.0, seaborn>=0.11.2, tensorboard>=2.10.0
    FlexRIC SWIG/Python Bindings & Utilities: 
 	cffi>=1.15.0, pyyaml>=6.0, pydantic>=1.10.0, requests>=2.28.0
-```
-## 2. How to Install OAI & FlexRIC
+### 2. How to Install OAI & FlexRIC
    System Build Prerequisites (Ubuntu 20.04/22.04 LTS)
    ```bash
    sudo apt update && sudo apt install -y \
@@ -95,7 +91,7 @@ The requirements.txt file includes all required libraries for running DJCSR (1. 
    ./build_oai -I
    ./build_oai --gNB -w SIMU --e2 -c
    ```
-## 3. Necessary Documents & Reference Links
+### 3. Necessary Documents & Reference Links
    OAI FlexRIC Repository: FlexRIC GitLab
    OAI FlexRIC Python xApp Guide: FlexRIC Python 3 xApp Docs
    OpenAirInterface 5G E2 Agent Manual: OAI E2AP README
