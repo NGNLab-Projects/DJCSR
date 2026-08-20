@@ -109,23 +109,27 @@ pip install -r requirements.txt
 	build-essential cmake ninja-build gcc g++ git bison flex swig \
 	python3-dev python3-pip python3-numpy libsctp-dev libasn1c-dev ccache pcre2-utils
 ```
-- Installing FlexRIC (O-RAN Near-RT RIC):  
+- Installing FlexRIC (O-RAN Near-RT RIC):
+  
  	**Build FlexRIC:** (Note: Requires gcc-12 as gcc-11 is not supported)
 	##### 1. Install GCC-12 and G++-12
 	```bash
 	sudo apt-get update && sudo apt-get install -y gcc-12 g++-12
 	 ```
 	##### 2. Clone FlexRIC Repository
+	```bash
 	git clone https://gitlab.eurecom.fr/mosaic5g/flexric.git
 	cd flexric
 	git checkout master
-	
+	 ```
 	##### 3. Create Build Directory and Export GCC-12
+	```bash
 	mkdir -p build && cd build
 	export CC=gcc-12
 	export CXX=g++-12
-	
+	 ```
 	##### 4. Configure with Python 3 xApp Enablement and Build
+	```bash
 	cmake -DXAPP_MULTACELL=ON -DXAPP_PYTHON3=ON ..
 	make -j$(nproc)
 	sudo make install
