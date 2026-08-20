@@ -68,7 +68,40 @@ The requirements.txt file includes all required libraries for running DJCSR (1. 
 	cffi>=1.15.0, pyyaml>=6.0, pydantic>=1.10.0, requests>=2.28.0
 
 ### 2. How to Install Docker
-
+	- Uninstall any old or conflicting Docker packages
+	```bash
+	sudo apt-get remove -y docker docker-engine docker.io containerd runc
+	 ```
+	- Update package index and install prerequisite tools
+	```bash
+	sudo apt-get update
+	sudo apt-get install -y ca-certificates curl gnupg lsb-release
+	 ```
+	- Add Docker's official GPG key
+	```bash
+	sudo mkdir -p /etc/apt/keyrings
+	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+	 ```
+	- Set up the Docker stable repository
+	```bash
+	echo \
+	  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] 					https://download.docker.com/linux/ubuntu \
+	  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+	 ```
+	- Install Docker Engine, CLI, Containerd, and Docker Compose Plugin
+	```bash
+	sudo apt-get update
+	sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+	 ```
+	- Add current user to docker group (run Docker without sudo)
+	```bash
+	sudo usermod -aG docker $USER
+	 ```
+	- Verify Docker installation
+	```bash
+	docker --version
+	docker compose version
+	 ```
 ### 3. How to Install [OAI](https://gitlab.eurecom.fr/oai/openairinterface5g.git) & [FlexRIC](https://github.com/duranta-project/flexric)
    #### System Build Prerequisites (Ubuntu 20.04/22.04 LTS)
    ```bash
@@ -79,19 +112,29 @@ The requirements.txt file includes all required libraries for running DJCSR (1. 
    #### Installing FlexRIC (O-RAN Near-RT RIC)
  	**Build FlexRIC:** (Note: Requires gcc-12 as gcc-11 is not supported)
 	```bash
+	##### 1. Install GCC-12 and G++-12
 	sudo apt-get update && sudo apt-get install -y gcc-12 g++-12
 	
+	##### 2. Clone FlexRIC Repository
 	git clone https://gitlab.eurecom.fr/mosaic5g/flexric.git
-	cd flexric/build
+	cd flexric
+	git checkout master
+	
+	##### 3. Create Build Directory and Export GCC-12
+	mkdir -p build && cd build
 	export CC=gcc-12
 	export CXX=g++-12
-	cmake ..
+	
+	##### 4. Configure with Python 3 xApp Enablement and Build
+	cmake -DXAPP_MULTACELL=ON -DXAPP_PYTHON3=ON ..
 	make -j$(nproc)
 	sudo make install
 	```
    #### Installing OpenAirInterface 5G (OAI gNB with E2 Agent)
 	```bash
 	git clone https://gitlab.eurecom.fr/oai/openairinterface5g.git
+	cd openairinterface5g
+	git checkout develop
 	cd cmake_targets
 	./build_oai -I -w SIMU --gNB --nrUE --build-e2 --ninja
  	```	
