@@ -25,14 +25,15 @@ This repository contains two main sub-trees:
 
 ```
 PRB_Allocation_O-RAN_xAPP
-├── Train Model
+├── 1. Train Model
 │   ├── agent.py              # D3QN Agent (Dueling Network, Replay Buffer)
 │   ├── environment.py        # 5G ISAC Network Simulation Environment
 │   └── train.py              # Training loop & evaluation script
-├── OAI_FlexRIC
+├── 2. OAI_FlexRIC
 │   ├── generate_traffic.sh   # iperf3 & ping traffic generator script
 │   ├── isac_xapp.py          # OAI FlexRIC E2 xApp D3QN Controller
 │   └── launch_topology.py    # OAI 5G NR RFSimulator Multi-gNB & UE launcher
+├── requirement.txt           # Necessary Libraries and Packages
 ├── .gitignore                # Git ignore rules
 └── README.md                 # Project documentation
 ```
@@ -56,16 +57,16 @@ PRB_Allocation_O-RAN_xAPP
 ## 🛠️ System Requirements
 The requirements.txt file includes all required libraries for running DJCSR (1. Train Model) and the FlexRIC Python xApp (2. OAI_FlexRIC):
 ### 1. Python 3 Requirements
-   Deep Reinforcement Learning & ML Frameworks:  
-	torch>=2.0.0, torchvision, torchaudio, gymnasium>=0.28.1, gym>=0.26.0
-   Numerical & Signal Processing:  
-	numpy>=1.22.0,<2.0.0, scipy>=1.8.0
-   Data Logging & Analysis:  
-	pandas>=1.4.0, h5py>=3.6.0
-   Visualization:  
-	matplotlib>=3.5.0, seaborn>=0.11.2, tensorboard>=2.10.0
-   FlexRIC SWIG/Python Bindings & Utilities:  
-	cffi>=1.15.0, pyyaml>=6.0, pydantic>=1.10.0, requests>=2.28.0
+   - Deep Reinforcement Learning & ML Frameworks:  
+		torch>=2.0.0, torchvision, torchaudio, gymnasium>=0.28.1, gym>=0.26.0
+   - Numerical & Signal Processing:  
+		numpy>=1.22.0,<2.0.0, scipy>=1.8.0
+   - Data Logging & Analysis:  
+		pandas>=1.4.0, h5py>=3.6.0
+   - Visualization:  
+		matplotlib>=3.5.0, seaborn>=0.11.2, tensorboard>=2.10.0
+   - FlexRIC SWIG/Python Bindings & Utilities:  
+		cffi>=1.15.0, pyyaml>=6.0, pydantic>=1.10.0, requests>=2.28.0
 
 ### 2. How to Install Docker
 	- Uninstall any old or conflicting Docker packages
