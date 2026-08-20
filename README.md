@@ -56,7 +56,7 @@ PRB_Allocation_O-RAN_xAPP
 ## 🛠️ System Requirements
 ```
 The requirements.txt file includes all required libraries for running DJCSR (1. Train Model) and the FlexRIC Python xApp (2. OAI_FlexRIC):
-
+```
 ## 1. Python 3 Requirements
 
    Deep Reinforcement Learning & ML Frameworks: 
