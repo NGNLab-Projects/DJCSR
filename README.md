@@ -71,8 +71,6 @@ The requirements.txt file includes all required libraries for running DJCSR (1. 
 ```bash
 pip install -r requirements.txt
 ```
----
-
 ### 2. How to Install Docker
 - Uninstall any old or conflicting Docker packages:  
 ```bash
@@ -104,7 +102,6 @@ pip install -r requirements.txt
 	docker --version
 	docker compose version
 ```
-
 ### 3. How to Install [OAI](https://gitlab.eurecom.fr/oai/openairinterface5g.git) & [FlexRIC](https://github.com/duranta-project/flexric)
    #### System Build Prerequisites (Ubuntu 20.04/22.04 LTS)
    ```bash
