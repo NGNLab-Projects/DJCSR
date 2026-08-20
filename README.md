@@ -58,22 +58,18 @@ PRB_Allocation_O-RAN_xAPP
 The requirements.txt file includes all required libraries for running DJCSR (1. Train Model) and the FlexRIC Python xApp (2. OAI_FlexRIC):
 ```
 ## 1. Python 3 Requirements
-
+```
    Deep Reinforcement Learning & ML Frameworks: 
 	torch>=2.0.0, torchvision, torchaudio, gymnasium>=0.28.1, gym>=0.26.0
-
    Numerical & Signal Processing: 
 	numpy>=1.22.0,<2.0.0, scipy>=1.8.0
-
    Data Logging & Analysis: 
 	pandas>=1.4.0, h5py>=3.6.0
-
    Visualization: 
 	matplotlib>=3.5.0, seaborn>=0.11.2, tensorboard>=2.10.0
-
    FlexRIC SWIG/Python Bindings & Utilities: 
 	cffi>=1.15.0, pyyaml>=6.0, pydantic>=1.10.0, requests>=2.28.0
-
+```
 ## 2. How to Install OAI & FlexRIC
    System Build Prerequisites (Ubuntu 20.04/22.04 LTS)
    ```bash
