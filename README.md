@@ -54,6 +54,7 @@ PRB_Allocation_O-RAN_xAPP
 ---
 
 ## 🛠️ System Requirements
+```
 The requirements.txt file includes all required libraries for running DJCSR (1. Train Model) and the FlexRIC Python xApp (2. OAI_FlexRIC):
 
 ## 1. Python 3 Requirements
@@ -107,7 +108,7 @@ The requirements.txt file includes all required libraries for running DJCSR (1. 
       **O-RAN.WG3.E2AP:** E2 Application Protocol Architecture
       **O-RAN.WG3.E2SM-KPM:** Key Performance Indicators Monitoring Service Model
       **O-RAN.WG3.E2SM-RC / E2SM-MAC:** RAN Control & MAC Scheduling Service Model
-
+```
 ---
  
 ## 💻 Quick Start
