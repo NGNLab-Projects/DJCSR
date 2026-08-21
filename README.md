@@ -192,7 +192,7 @@ Run the xApp controller to perform real-time E2 control using the trained policy
 cd ~/openair2/E2AP/flexric/examples/xApp/python3/isac_xapp.py
 ```
 
-#### Step 6: Plot & Verify Testbed Results
+#### Step 8: Plot & Verify Testbed Results
 Generate throughput, latency, and sensing accuracy plots from metrics.csv:
 ```bash
 python3 plot_metrics.py
