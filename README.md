@@ -190,7 +190,7 @@ sudo bash generate_traffic.sh
 ```
 
 #### Step 7: Run ISAC xApp Controller
-Run the xApp controller to perform real-time E2 control using the trained D3QN policy:
+Run the xApp controller to perform real-time E2 control using the trained policy:
 ```bash
 cd ~/openair2/E2AP/flexric/examples/xApp/python3/isac_xapp.py
 ```
