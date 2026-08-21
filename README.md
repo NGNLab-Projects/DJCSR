@@ -72,34 +72,34 @@ The requirements.txt file includes all required libraries for running DJCSR (1. 
 pip install -r requirements.txt
 ```
 ### 2. How to Install Docker on Ubuntu
-- Uninstall any old or conflicting Docker packages:  
+- **Uninstall any old or conflicting Docker packages:**  
 ```bash
 	sudo apt-get remove -y docker docker-engine docker.io containerd runc docker-doc docker-
 	compose docker-compose-v2 podman-docker
 ```
-- Update package index and install prerequisite tools:  
+- **Update package index and install prerequisite tools:**  
 ```bash
 	sudo apt-get update
 	sudo apt-get install -y ca-certificates curl
 ```
-- Add Docker's official GNU Privacy Guard (GPG) key:
+- **Add Docker's official GNU Privacy Guard (GPG) key:**
 ```bash
 	sudo mkdir -p /etc/apt/keyrings
 	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 ```
-- Set up the Docker stable repository:  
+- **Set up the Docker stable repository:**  
 ```bash
 	echo \
 	  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
 	$(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
 	sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ```
-- Install Docker Engine, CLI, Containerd, and Docker Compose Plugin:  
+- **Install Docker Engine, CLI, Containerd, and Docker Compose Plugin:**  
 ```bash
 	sudo apt-get update
 	sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
-- Verify Docker installation:  
+- **Verify Docker installation:**  
 ```bash
 	docker --version
 	docker compose version
