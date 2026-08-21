@@ -105,45 +105,40 @@ pip install -r requirements.txt
 	docker compose version
 ```
 ### 3. How to Install [OAI](https://gitlab.eurecom.fr/oai/openairinterface5g.git) & [FlexRIC](https://github.com/duranta-project/flexric)
-- **System Build Prerequisites (Ubuntu 20.04/22.04 LTS):**  
+- **System Build Prerequisites (Ubuntu 22.04 LTS):**  
 ```bash
 	sudo apt update && sudo apt install -y \
-	build-essential cmake ninja-build gcc g++ git bison flex swig \
+	build-essential cmake ninja-build gcc-12 g++-12 git bison flex swig \
 	python3-dev python3-pip python3-numpy libsctp-dev libasn1c-dev ccache pcre2-utils
 ```
-- **Installing FlexRIC (O-RAN Near-RT RIC):**
-  
- 	**Build FlexRIC:** (Note: Requires gcc-12 as gcc-11 is not supported)
-	1. Install GCC-12 and G++-12
-	```bash
-	sudo apt-get update && sudo apt-get install -y gcc-12 g++-12
-	 ```
-	2. Clone FlexRIC Repository
-	```bash
-	git clone https://gitlab.eurecom.fr/mosaic5g/flexric.git
+- **Clone & Build FlexRIC (v1.0, 2024.w12):**
+```bash
+  	git clone https://gitlab.eurecom.fr/mosaic5g/flexric.git
 	cd flexric
-	git checkout master
-	 ```
-	3. Create Build Directory and Export GCC-12
-	```bash
+	git fetch --all --tags
+	git checkout 2024.w12
 	mkdir -p build && cd build
-	export CC=gcc-12
-	export CXX=g++-12
-	 ```
-	4. Configure with Python 3 xApp Enablement and Build
-	```bash
-	cmake -DXAPP_MULTACELL=ON -DXAPP_PYTHON3=ON ..
+	cmake -DCMAKE_C_COMPILER=gcc-12 \
+	      -DCMAKE_CXX_COMPILER=g++-12 \
+	      -DXAPP_MULTICELL=ON \
+	      -DXAPP_PYTHON3=ON ..
 	make -j$(nproc)
 	sudo make install
-	```
-- **Installing OpenAirInterface 5G (OAI gNB with E2 Agent):**  
-	```bash
+	sudo ldconfig
+```
+- **Clone & Build OpenAirInterface 5G (v2024.w24):**  
+```bash
+	cd ~
 	git clone https://gitlab.eurecom.fr/oai/openairinterface5g.git
 	cd openairinterface5g
-	git checkout develop
+	git fetch --all --tags
+	git checkout 2024.w24
+```
+```bash
 	cd cmake_targets
+	# -I installs missing OAI packages, --build-e2 links against installed FlexRIC
 	./build_oai -I -w SIMU --gNB --nrUE --build-e2 --ninja
- 	```
+```
 ---
  
 ## 💻 Quick Start
