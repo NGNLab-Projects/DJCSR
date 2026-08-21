@@ -104,7 +104,7 @@ pip install -r requirements.txt
 	docker --version
 	docker compose version
 ```
-### 3. How to Install [OAI](https://gitlab.eurecom.fr/oai/openairinterface5g.git) & [FlexRIC](https://github.com/duranta-project/flexric)
+### 3. How to Install [OAI]([https://gitlab.eurecom.fr/oai/openairinterface5g.git]) & [FlexRIC]([https://gitlab.eurecom.fr/mosaic5g/flexric.git])
 - **System Build Prerequisites (Ubuntu 22.04 LTS):**  
 ```bash
 	sudo apt update && sudo apt install -y \
