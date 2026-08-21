@@ -89,7 +89,7 @@ pip install -r requirements.txt
 - Set up the Docker stable repository:  
 ```bash
 	echo \
-	  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] 					https://download.docker.com/linux/ubuntu \
+	  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
 	  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ```
 - Install Docker Engine, CLI, Containerd, and Docker Compose Plugin:  
@@ -159,7 +159,7 @@ python train.py
 
 To validate the trained `d3qn_isac_final.pth` model on a live OpenAirInterface (OAI) & FlexRIC Near-RT RIC testbed, execute the following steps in sequence:
 
-#### Step 1: Start 5G Core Network (OAI CN)
+#### Step 1: Start 5G Core Network (OAI CN) containers (MySQL, AMF, SMF, UPF):
 ```bash
 cd ~/oai-workshops/cn
 docker compose up -d
@@ -172,11 +172,12 @@ sudo ~/openair2/E2AP/flexric/build/examples/ric/nearRT-RIC
 #### Step 3: Start a gNB
 ```bash
 	cd ~/openairinterface5g/cmake_targets/ran_build/build
-	sudo ./nr-softmodem -O ~/openairinterface5g/targets/PROJECTS/GENERIC-NR-				5GC/CONF/gnb.sa.band78.fr1.106PRB.usrpb210.conf --rfsim -E --gNBs.[0].min_rxtxtime 6
+	sudo ./nr-softmodem -O ~/openairinterface5g/targets/PROJECTS/GENERIC-NR-5GC/CONF/gnb.sa.band78.fr1.106PRB.usrpb210.conf --rfsim -E --gNBs.[0].min_rxtxtime 6
 ```
 #### Step 4: Start a UE
   ```bash
-	sudo ./nr-uesoftmodem -r 106 --numerology 1 --band 78 -C 3619200000 --rfsim -O 	~/openairinterface5g/targets/PROJECTS/GENERIC-NR-5GC/CONF/ue.conf -E --num-ues 10
+	sudo ./nr-uesoftmodem -r 106 --numerology 1 --band 78 -C 3619200000 --rfsim -O
+	~/openairinterface5g/targets/PROJECTS/GENERIC-NR-5GC/CONF/ue.conf -E --num-ues 10
   ```
 #### Step 5: Launch Network Topology (3 gNBs + 10 UEs)
 ```bash
