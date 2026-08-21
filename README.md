@@ -193,7 +193,7 @@ python3 plot_metrics.py
 ```
 ### 3. Results and Conclusion
 
-#### 🔑 Results
+#### 📈 Results
 1. **eMBB Throughput (+31.0% Gain)**:
    - DJCSR dynamically adapts subcarrier allocation ratios ($\rho$) and transmit power budgets ($p$), yielding a **31% throughput increase** over conventional DQN while consistently exceeding the **60 Mbps QoS target**.
 2. **URLLC Latency (-16.7% Reduction)**:
