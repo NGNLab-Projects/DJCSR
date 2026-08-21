@@ -141,7 +141,7 @@ pip install -r requirements.txt
 	git checkout develop
 	cd cmake_targets
 	./build_oai -I -w SIMU --gNB --nrUE --build-e2 --ninja
- 	```	
+ 	```
 ---
  
 ## 💻 Quick Start
@@ -169,18 +169,26 @@ docker ps
 ```bash
 sudo ~/openair2/E2AP/flexric/build/examples/ric/nearRT-RIC
 ```
-
-#### Step 3: Launch Network Topology (3 gNBs + 10 UEs)
+#### Step 3: Start a gNB
+```bash
+	cd ~/openairinterface5g/cmake_targets/ran_build/build
+	sudo ./nr-softmodem -O ~/openairinterface5g/targets/PROJECTS/GENERIC-NR-				5GC/CONF/gnb.sa.band78.fr1.106PRB.usrpb210.conf --rfsim -E --gNBs.[0].min_rxtxtime 6
+```
+#### Step 4: Start a UE
+  ```bash
+	sudo ./nr-uesoftmodem -r 106 --numerology 1 --band 78 -C 3619200000 --rfsim -O 	~/openairinterface5g/targets/PROJECTS/GENERIC-NR-5GC/CONF/ue.conf -E --num-ues 10
+  ```
+#### Step 5: Launch Network Topology (3 gNBs + 10 UEs)
 ```bash
 sudo python3 launch_topology.py
 ```
 
-#### Step 4: Generate Background Traffic (eMBB + URLLC)
+#### Step 6: Generate Background Traffic (eMBB + URLLC)
 ```bash
 sudo bash generate_traffic.sh
 ```
 
-#### Step 5: Run ISAC xApp Controller
+#### Step 7: Run ISAC xApp Controller
 Run the xApp controller to perform real-time E2 control using the trained D3QN policy:
 ```bash
 cd ~/openair2/E2AP/flexric/examples/xApp/python3/isac_xapp.py
