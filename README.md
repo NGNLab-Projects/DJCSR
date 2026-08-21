@@ -72,7 +72,7 @@ The requirements.txt file includes all required libraries for running DJCSR (1. 
 ```bash
 pip install -r requirements.txt
 ```
-### 2. How to Install Docker on Ubuntu
+### 🐳 2. How to Install Docker on Ubuntu
 - **Uninstall any old or conflicting Docker packages:**  
 ```bash
 	sudo apt-get remove -y docker docker-engine docker.io containerd runc docker-doc docker-
@@ -105,7 +105,7 @@ pip install -r requirements.txt
 	docker --version
 	docker compose version
 ```
-### 3. How to Install [OAI](https://gitlab.eurecom.fr/oai/openairinterface5g.git) & [FlexRIC](https://gitlab.eurecom.fr/mosaic5g/flexric.git)
+### 📡 3. How to Install [OAI](https://gitlab.eurecom.fr/oai/openairinterface5g.git) & [FlexRIC](https://gitlab.eurecom.fr/mosaic5g/flexric.git)
 - **System Build Prerequisites (Ubuntu 22.04 LTS):**  
 ```bash
 	sudo apt update && sudo apt install -y \
