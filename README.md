@@ -75,8 +75,8 @@ pip install -r requirements.txt
 ### 🐳 2. How to Install Docker on Ubuntu
 - **Uninstall any old or conflicting Docker packages:**  
 ```bash
-	sudo apt-get remove -y docker docker-engine docker.io containerd runc docker-doc docker-
-	compose docker-compose-v2 podman-docker
+	sudo apt-get remove -y docker docker-engine docker.io containerd runc \
+  		docker-doc docker-compose docker-compose-v2 podman-docker
 ```
 - **Update package index and install prerequisite tools:**  
 ```bash
@@ -146,7 +146,7 @@ pip install -r requirements.txt
 ### 1. Train Model (Simulation)
 The simulation pipeline uses `environment.py` (ISAC Environment) and `agent.py` (D3QN Architecture) to train the resource allocation policy.
 ```bash
-cd “Train Model"
+cd “1. Train Model"
 python train.py
 # Output: d3qn_isac_final.pth
 ```
@@ -184,7 +184,7 @@ sudo bash generate_traffic.sh
 #### Step 7: Run ISAC xApp Controller
 Run the xApp controller to perform real-time E2 control using the trained policy:
 ```bash
-cd ~/openair2/E2AP/flexric/examples/xApp/python3/isac_xapp.py
+python3 ~/openair2/E2AP/flexric/examples/xApp/python3/isac_xapp.py
 ```
 #### Step 8: Plot & Verify Testbed Results
 Generate throughput, latency, and sensing accuracy plots from metrics.csv:
