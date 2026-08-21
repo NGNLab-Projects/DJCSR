@@ -140,20 +140,16 @@ pip install -r requirements.txt
 	./build_oai -I -w SIMU --gNB --nrUE --build-e2 --ninja
 ```
 ---
- 
 ## 💻 Quick Start
 
 ### 1. Train Model (Simulation)
 The simulation pipeline uses `environment.py` (ISAC Environment) and `agent.py` (D3QN Architecture) to train the resource allocation policy.
-
 ```bash
 cd “Train Model"
 python train.py
 # Output: d3qn_isac_final.pth
 ```
-
 ### 2. OAI / FlexRIC (Testbed Validation)
-
 To validate the trained `d3qn_isac_final.pth` model on a live OpenAirInterface (OAI) & FlexRIC Near-RT RIC testbed, execute the following steps in sequence:
 
 #### Step 1: Start 5G Core Network (OAI CN) containers (MySQL, AMF, SMF, UPF):
@@ -180,18 +176,15 @@ sudo ~/openair2/E2AP/flexric/build/examples/ric/nearRT-RIC
 ```bash
 sudo python3 launch_topology.py
 ```
-
 #### Step 6: Generate Background Traffic (eMBB + URLLC)
 ```bash
 sudo bash generate_traffic.sh
 ```
-
 #### Step 7: Run ISAC xApp Controller
 Run the xApp controller to perform real-time E2 control using the trained policy:
 ```bash
 cd ~/openair2/E2AP/flexric/examples/xApp/python3/isac_xapp.py
 ```
-
 #### Step 8: Plot & Verify Testbed Results
 Generate throughput, latency, and sensing accuracy plots from metrics.csv:
 ```bash
