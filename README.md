@@ -57,7 +57,7 @@ PRB_Allocation_O-RAN_xAPP
 ## ⚙️ System Requirements
 The requirements.txt file includes all required libraries for running DJCSR (1. Train Model) and the FlexRIC Python xApp (2. OAI_FlexRIC):  
 
-### 🐍 1. Python 3 Requirements
+### 1. Python 3 Requirements
    - Deep Reinforcement Learning & ML Frameworks:  
 		torch>=2.0.0, torchvision, torchaudio, gymnasium>=0.28.1, gym>=0.26.0
    - Numerical & Signal Processing:  
@@ -72,17 +72,8 @@ The requirements.txt file includes all required libraries for running DJCSR (1. 
 ```bash
 pip install -r requirements.txt
 ```
-### 🐳 2. How to Install Docker on Ubuntu
-- **Uninstall any old or conflicting Docker packages:**  
-```bash
-	sudo apt-get remove -y docker docker-engine docker.io containerd runc \
-  		docker-doc docker-compose docker-compose-v2 podman-docker
-```
-- **Update package index and install prerequisite tools:**  
-```bash
-	sudo apt-get update
-	sudo apt-get install -y ca-certificates curl
-```
+### 2. How to Install Docker on Ubuntu
+
 - **Add Docker's official GNU Privacy Guard (GPG) key:**
 ```bash
 	sudo mkdir -p /etc/apt/keyrings
@@ -105,7 +96,7 @@ pip install -r requirements.txt
 	docker --version
 	docker compose version
 ```
-### 📡 3. How to Install [OAI](https://gitlab.eurecom.fr/oai/openairinterface5g.git) & [FlexRIC](https://gitlab.eurecom.fr/mosaic5g/flexric.git)
+### 3. How to Install [OAI](https://gitlab.eurecom.fr/oai/openairinterface5g.git) & [FlexRIC](https://gitlab.eurecom.fr/mosaic5g/flexric.git)
 - **System Build Prerequisites (Ubuntu 22.04 LTS):**  
 ```bash
 	sudo apt update && sudo apt install -y \
@@ -141,7 +132,7 @@ pip install -r requirements.txt
 	./build_oai -I -w SIMU --gNB --nrUE --build-e2 --ninja
 ```
 ---
-## 💻 Quick Start
+## Quick Start
 
 ### 1. Train Model (Simulation)
 The simulation pipeline uses `environment.py` (ISAC Environment) and `agent.py` (D3QN Architecture) to train the resource allocation policy.
@@ -193,7 +184,7 @@ python3 plot_metrics.py
 ```
 ### 3. Results and Conclusion
 
-#### 📈 Results
+#### Results
 1. **eMBB Throughput (+31.0% Gain)**:
    - DJCSR dynamically adapts subcarrier allocation ratios ($\rho$) and transmit power budgets ($p$), yielding a **31% throughput increase** over conventional DQN while consistently exceeding the **60 Mbps QoS target**.
 2. **URLLC Latency (-16.7% Reduction)**:
@@ -201,7 +192,7 @@ python3 plot_metrics.py
 3. **Sensing Accuracy**:
    - By joint optimization of sensing subcarrier interleaved spacing ($\Delta_s$), DJCSR achieves an average range estimation RMSE of **0.184 m**.
 
-#### 📝 Conclusion
+#### Conclusion
 - **Adaptive Joint Resource Allocation**: DJCSR successfully resolves the fundamental trade-off between communication Quality-of-Service (QoS) and radar sensing precision in multi-cell 6G ISAC networks.
 - **Hardware Feasibility**: Real-time E2 control loop validation on the FlexRIC Near-RT RIC and OpenAirInterface (OAI) gNB testbed confirms that D3QN-driven xApps operate seamlessly within sub-10ms Near-RT RIC decision epochs.
 - **Scalability for 6G O-RAN**: The framework demonstrates that AI-native xApps can dynamically adjust subcarrier spacing, power splitting, and slice priorities in real time under dynamic fading and mobile traffic.
