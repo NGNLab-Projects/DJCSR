@@ -33,7 +33,7 @@ PRB_Allocation_O-RAN_xAPP
 │   ├── generate_traffic.sh   # iperf3 & ping traffic generator script
 │   ├── isac_xapp.py          # OAI FlexRIC E2 xApp D3QN Controller
 │   └── launch_topology.py    # OAI 5G NR RFSimulator Multi-gNB & UE launcher
-├── Results
+├── Results					  # OAI/FlexRIC Testbed results
 ├── examples                  # xApp for RAN Slicing and information monitor
 │   ├── emulator             
 │   ├── ric                   # RIC including E2 interface
