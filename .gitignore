@@ -14,8 +14,6 @@ __pycache__/
 *.ipynb
 
 # Output plots, logs, data
-*.png
-*.pdf
 *.svg
 *.csv
 *.log
