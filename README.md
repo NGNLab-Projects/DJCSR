@@ -1,43 +1,49 @@
-# PRB Allocation O-RAN xAPP via D3QN
+# Resource Optimization in O-RAN via D3QN
 
 ![O-RAN xApp](https://img.shields.io/badge/O--RAN-Near--RT%20RIC%20xApp-blue.svg)
+![FlexRIC](https://img.shields.io/badge/FlexRIC-E2AP%20v2.0-orange.svg)
+![OpenAirInterface](https://img.shields.io/badge/OAI-5G%20NR-red.svg)
 ![Python](https://img.shields.io/badge/Python-3.9%2B-green.svg)
 ![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-ee4c2c.svg)
 ![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)
 
-An Open RAN (O-RAN) Near-Real-Time RIC xApp for **Dynamic Physical Resource Block (PRB) Allocation** in 5G/6G Integrated Sensing and Communication (ISAC) networks using **Deep Dueling Double Q-Networks (D3QN)**.
+An Open RAN (O-RAN) Near-Real-Time RIC xApp for **Dynamic Subcarrier Allocation** in 5G/6G Integrated Sensing and Communication (ISAC) networks using **DJCSR  (D3QN-Based Joint Communication–Sensing Resource Optimization) Framework** by **Deep Dueling Double Q-Networks (D3QN)**, integrated with **OpenAirInterface (OAI)** and **FlexRIC**.
 
 ---
 
 ## 📌 Overview
 
-As 5G-Advanced and 6G networks evolve toward **Integrated Sensing and Communication (ISAC)**, base stations (gNBs) must dynamically share spectrum and radio resource blocks (PRBs) between target radar sensing and multi-tenant communication services (**eMBB** and **URLLC**).
+As 5G-Advanced and 6G networks evolve toward **Integrated Sensing and Communication (ISAC)**, base stations (gNBs) must dynamically share spectrum and subcarriers between target radar sensing and multi-tenant communication services (**eMBB** and **URLLC**).
 
-This xApp runs on the **Near-RT RIC (RAN Intelligent Controller)** to optimize resource allocation policies over the E2 interface, ensuring:
-- **Radar Target Sensing**: Maximizing the Fisher Information Matrix (FIM) for high-precision range/velocity tracking.
-- **eMBB Slicing**: Maximizing aggregate data throughput.
-- **URLLC Slicing**: Guaranteeing sub-10ms ultra-reliable low-latency communications.
-
----
-
-## 🚀 Key Features
-
-- **D3QN Reinforcement Learning**: Combines Dueling Q-Network architecture with Double DQN updating to eliminate Q-value overestimation.
-- **ISAC Simulation Environment**: 3GPP-aligned numerology (Band n78, 30 kHz SCS, 23.4 MHz bandwidth) with multi-gNB Uniform Linear Arrays (ULA).
-- **Dynamic PRB Splitting**: Adaptive partitioning of subcarriers across radar sensing, URLLC, and eMBB slices.
-- **Custom Multi-Objective Reward Function**: Balanced formulation combining FIM, throughput, and latency constraints.
+This repository contains two main sub-trees:
+1. **`Train Model`**: Standalone D3QN reinforcement learning simulation suite.
+2. **`OAI_FlexRIC`**: Live OpenAirInterface (OAI) & FlexRIC E2AP xApp deployment scripts.
 
 ---
 
 ## 📂 Repository Structure
 
 ```
-PRB_Allocation_O-RAN_xAPP/
-├── environment.py   # 5G ISAC Network Environment (Channel models, FIM, QoS metrics)
-├── agent.py         # D3QN Agent implementation (Dueling Deep Q-Network, Replay Buffer)
-├── train.py         # Training loop & performance metric evaluation script
-├── .gitignore       # Git ignore rules for Python & PyTorch artifacts
-└── README.md        # Project documentation
+PRB_Allocation_O-RAN_xAPP
+├── Train_Model
+│   ├── agent.py              # D3QN Agent (Dueling Network, Replay Buffer)
+│   ├── environment.py        # 5G ISAC Network Simulation Environment
+│   └── train.py              # Training loop & evaluation script
+├── OAI_FlexRIC
+│   ├── generate_traffic.sh   # iperf3 & ping traffic generator script
+│   ├── isac_xapp.py          # OAI FlexRIC E2 xApp D3QN Controller
+│   └── launch_topology.py    # OAI 5G NR RFSimulator Multi-gNB & UE launcher
+├── examples                  # xApp for RAN Slicing and information monitor
+│   ├── emulator             
+│   ├── ric                   # RIC including E2 interface
+│   └── xApp                  # Source code for xApps
+│       ├── c                 # xApps based on C code
+│       └── python3           # xApps based on Python code
+│           └── xapp_isac.py  # Source code for xapp_isac
+├── Results					  # OAI/FlexRIC Testbed results
+├── requirement.txt           # Necessary Libraries and Packages
+├── .gitignore                # Git ignore rules
+└── README.md                 # Project documentation
 ```
 
 ---
@@ -47,41 +53,154 @@ PRB_Allocation_O-RAN_xAPP/
 | Parameter | Value | Description |
 | :--- | :--- | :--- |
 | **gNB Topology** | 3 Base Stations | Line layout spaced 500m apart |
-| **Antennas ($N_t$)** | 8 per gNB | Uniform Linear Array (ULA) with Maximum Ratio Transmission (MRT) |
+| **Antennas ($N_t$)** | 8 per gNB | Uniform Linear Array (ULA) |
 | **Carrier Frequency ($f_c$)** | 3.5 GHz | 3GPP NR Band n78 |
 | **Subcarrier Spacing ($SCS$)** | 30 kHz | Numerology $\mu = 1$ |
 | **Total Subcarriers ($N_{sc}$)** | 780 | Total bandwidth $\approx 23.4$ MHz |
-| **URLLC Users** | 5 UEs | Latency target: $<10$ ms |
+| **URLLC Users** | 5 UEs | Latency target: $<5$ ms |
 | **eMBB Users** | 5 UEs | High throughput demand |
 
 ---
 
-## 💻 Quick Start
+## ⚙️ System Requirements
+The requirements.txt file includes all required libraries for running DJCSR (Train_Model) and the FlexRIC Python xApp (OAI_FlexRIC):  
 
-### 1. Requirements
-
-Ensure Python 3.9+ is installed along with the required libraries:
+### 1. Python 3 Requirements
+   - Deep Reinforcement Learning & ML Frameworks:  
+		torch>=2.0.0, torchvision, torchaudio, gymnasium>=0.28.1, gym>=0.26.0
+   - Numerical & Signal Processing:  
+		numpy>=1.22.0,<2.0.0, scipy>=1.8.0
+   - Data Logging & Analysis:  
+		pandas>=1.4.0, h5py>=3.6.0
+   - Visualization:  
+		matplotlib>=3.5.0, seaborn>=0.11.2, tensorboard>=2.10.0
+   - FlexRIC SWIG/Python Bindings & Utilities:  
+		cffi>=1.15.0, pyyaml>=6.0, pydantic>=1.10.0, requests>=2.28.0
 
 ```bash
-pip install numpy torch matplotlib
+pip install -r requirements.txt
 ```
+### 2. How to Install Docker on Ubuntu
 
-### 2. Run Training
-
-To train the D3QN xApp agent and evaluate resource allocation performance:
-
+- **Add Docker's official GNU Privacy Guard (GPG) key:**
 ```bash
+	sudo mkdir -p /etc/apt/keyrings
+	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+```
+- **Set up the Docker stable repository:**  
+```bash
+	echo \
+	  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+	$(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+	sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+- **Install Docker Engine, CLI, Containerd, and Docker Compose Plugin:**  
+```bash
+	sudo apt-get update
+	sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+- **Verify Docker installation:**  
+```bash
+	docker --version
+	docker compose version
+```
+### 3. How to Install [OAI](https://gitlab.eurecom.fr/oai/openairinterface5g.git) & [FlexRIC](https://gitlab.eurecom.fr/mosaic5g/flexric.git)
+- **System Build Prerequisites (Ubuntu 22.04 LTS):**  
+```bash
+	sudo apt update && sudo apt install -y \
+	build-essential cmake ninja-build gcc-12 g++-12 git bison flex swig \
+	python3-dev python3-pip python3-numpy libsctp-dev libasn1c-dev ccache pcre2-utils
+```
+- **Clone & Build FlexRIC (v1.0, 2024.w12):**
+```bash
+  	git clone https://gitlab.eurecom.fr/mosaic5g/flexric.git
+	cd flexric
+	git fetch --all --tags
+	git checkout 2024.w12
+	mkdir -p build && cd build
+	cmake -DCMAKE_C_COMPILER=gcc-12 \
+	      -DCMAKE_CXX_COMPILER=g++-12 \
+	      -DXAPP_MULTICELL=ON \
+	      -DXAPP_PYTHON3=ON ..
+	make -j$(nproc)
+	sudo make install
+	sudo ldconfig
+```
+- **Clone & Build OpenAirInterface 5G (v2024.w24):**  
+```bash
+	cd ~
+	git clone https://gitlab.eurecom.fr/oai/openairinterface5g.git
+	cd openairinterface5g
+	git fetch --all --tags
+	git checkout 2024.w24
+```
+```bash
+	cd cmake_targets
+	# -I installs missing OAI packages, --build-e2 links against installed FlexRIC
+	./build_oai -I -w SIMU --gNB --nrUE --build-e2 --ninja
+```
+---
+## Quick Start
+
+### 1. Train Model (Simulation)
+The simulation pipeline uses `environment.py` (ISAC Environment) and `agent.py` (D3QN Architecture) to train the resource allocation policy.
+```bash
+cd “1. Train Model"
 python train.py
+# Output: d3qn_isac_final.pth
 ```
+### 2. OAI / FlexRIC (Testbed Validation)
+To validate the trained `d3qn_isac_final.pth` model on a live OpenAirInterface (OAI) & FlexRIC Near-RT RIC testbed, execute the following steps in sequence:
 
----
+#### Step 1: Start 5G Core Network (OAI CN) containers (MySQL, AMF, SMF, UPF):
+```bash
+cd ~/oai-workshops/cn
+docker compose up -d
+docker ps
+```
+#### Step 2: Launch Near-RT RIC (FlexRIC)
+```bash
+sudo ~/openair2/E2AP/flexric/build/examples/ric/nearRT-RIC
+```
+#### Step 3: Start a gNB
+```bash
+	cd ~/openairinterface5g/cmake_targets/ran_build/build
+	sudo ./nr-softmodem -O ~/openairinterface5g/targets/PROJECTS/GENERIC-NR-5GC/CONF/gnb.sa.band78.fr1.106PRB.usrpb210.conf --rfsim -E --gNBs.[0].min_rxtxtime 6
+```
+#### Step 4: Start a UE
+  ```bash
+	sudo ./nr-uesoftmodem -r 106 --numerology 1 --band 78 -C 3619200000 --rfsim -O
+	~/openairinterface5g/targets/PROJECTS/GENERIC-NR-5GC/CONF/ue.conf -E --num-ues 10
+  ```
+#### Step 5: Launch Network Topology (3 gNBs + 10 UEs)
+```bash
+sudo python3 launch_topology.py
+```
+#### Step 6: Generate Background Traffic (eMBB + URLLC)
+```bash
+sudo bash generate_traffic.sh
+```
+#### Step 7: Run ISAC xApp Controller
+Run the xApp controller to perform real-time E2 control using the trained policy:
+```bash
+python3 ~/openair2/E2AP/flexric/examples/xApp/python3/isac_xapp.py
+```
+#### Step 8: Plot & Verify Testbed Results
+Generate throughput, latency, and sensing accuracy plots from metrics.csv:
+```bash
+python3 plot_metrics.py
+```
+### 3. Results and Conclusion
 
-## 🤝 Contributing
+#### Results
+1. **eMBB Throughput (+31.0% Gain)**:
+   - DJCSR dynamically adapts subcarrier allocation ratios ($\rho$) and transmit power budgets ($p$), yielding a **31% throughput increase** over conventional DQN while consistently exceeding the **60 Mbps QoS target**.
+2. **URLLC Latency (-16.7% Reduction)**:
+   - Dynamic subcarrier allocation ratios ($\rho$) and joint power splitting ($p$) optimize resource assignment to maintain median URLLC latency at **3.93 ms** (a **16.7% reduction** over conventional DQN), strictly enforcing the **< 5 ms ultra-low latency constraint** under dynamic traffic bursts.
+3. **Sensing Accuracy**:
+   - By joint optimization of sensing subcarrier interleaved spacing ($\Delta_s$), DJCSR achieves an average range estimation RMSE of **0.184 m**.
 
-Contributions, issues, and feature requests are welcome! Feel free to check the issues page or submit a pull request.
-
----
-
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
+#### Conclusion
+- **Adaptive Joint Resource Allocation**: DJCSR successfully resolves the fundamental trade-off between communication Quality-of-Service (QoS) and radar sensing precision in multi-cell 6G ISAC networks.
+- **Hardware Feasibility**: Real-time E2 control loop validation on the FlexRIC Near-RT RIC and OpenAirInterface (OAI) gNB testbed confirms that D3QN-driven xApps operate seamlessly within sub-10ms Near-RT RIC decision epochs.
+- **Scalability for 6G O-RAN**: The framework demonstrates that AI-native xApps can dynamically adjust subcarrier spacing, power splitting, and slice priorities in real time under dynamic fading and mobile traffic.
