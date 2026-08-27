@@ -25,20 +25,21 @@ This repository contains two main sub-trees:
 
 ```
 PRB_Allocation_O-RAN_xAPP
-├── 1. Train Model
+├── Train_Model
 │   ├── agent.py              # D3QN Agent (Dueling Network, Replay Buffer)
 │   ├── environment.py        # 5G ISAC Network Simulation Environment
 │   └── train.py              # Training loop & evaluation script
-├── 2. OAI_FlexRIC
+├── OAI_FlexRIC
 │   ├── generate_traffic.sh   # iperf3 & ping traffic generator script
 │   ├── isac_xapp.py          # OAI FlexRIC E2 xApp D3QN Controller
 │   └── launch_topology.py    # OAI 5G NR RFSimulator Multi-gNB & UE launcher
-├── examples/                 # xApp for RAN Slicing and information monitor
-│   ├── emulator/            
-│   ├── ric/                  # RIC including E2 interface
-│   └── xApp/                 # Source code for xApps
-│       ├── c/                # xApps based on C code
-│       └── python3/          # xApps based on Python code
+├── Results
+├── examples                  # xApp for RAN Slicing and information monitor
+│   ├── emulator             
+│   ├── ric                   # RIC including E2 interface
+│   └── xApp                  # Source code for xApps
+│       ├── c                 # xApps based on C code
+│       └── python3           # xApps based on Python code
 │           └── xapp_isac.py  # Source code for xapp_isac
 ├── requirement.txt           # Necessary Libraries and Packages
 ├── .gitignore                # Git ignore rules
@@ -62,7 +63,7 @@ PRB_Allocation_O-RAN_xAPP
 ---
 
 ## ⚙️ System Requirements
-The requirements.txt file includes all required libraries for running DJCSR (1. Train Model) and the FlexRIC Python xApp (2. OAI_FlexRIC):  
+The requirements.txt file includes all required libraries for running DJCSR (Train_Model) and the FlexRIC Python xApp (OAI_FlexRIC):  
 
 ### 1. Python 3 Requirements
    - Deep Reinforcement Learning & ML Frameworks:  
