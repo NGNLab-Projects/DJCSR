@@ -37,8 +37,8 @@ PRB_Allocation_O-RAN_xAPP
 │   ├── emulator/            
 │   ├── ric/                  # RIC including E2 interface
 │   └── xApp/                 # Source code for xApps
-│       ├── c/                # Our xApps based on C code
-│       └── python3/          # Our xApps based on Python code
+│       ├── c/                # xApps based on C code
+│       └── python3/          # xApps based on Python code
 │           └── xapp_isac.py  # Source code for xapp_isac
 ├── requirement.txt           # Necessary Libraries and Packages
 ├── .gitignore                # Git ignore rules
