@@ -30,7 +30,6 @@ This repository contains two main sub-trees:
 │   └── train.py              # Training loop & evaluation script
 ├── OAI_FlexRIC
 │   ├── generate_traffic.sh   # iperf3 & ping traffic generator script
-│   ├── isac_xapp.py          # OAI FlexRIC E2 xApp D3QN Controller
 │   └── launch_topology.py    # OAI 5G NR RFSimulator Multi-gNB & UE launcher
 ├── examples                  # xApp for RAN Slicing and information monitor
 │   ├── emulator             
@@ -38,7 +37,7 @@ This repository contains two main sub-trees:
 │   └── xApp                  # Source code for xApps
 │       ├── c                 # xApps based on C code
 │       └── python3           # xApps based on Python code
-│           └── xapp_isac.py  # Source code for xapp_isac
+│           └── xapp_isac.py  # Source code for OAI FlexRIC E2 xApp D3QN Controller
 ├── openair2/
 │   ├── E2AP/
 │   │   ├── RAN_FUNCTION/
