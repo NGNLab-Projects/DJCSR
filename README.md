@@ -198,7 +198,7 @@ sudo bash generate_traffic.sh
 #### Step 7: Run ISAC xApp Controller
 Run the xApp controller to perform real-time E2 control using the trained policy:
 ```bash
-python3 ~/openair2/E2AP/flexric/examples/xApp/python3/isac_xapp.py
+python3 ~/openair2/E2AP/flexric/examples/xApp/python3/xapp_isac.py
 ```
 #### Step 8: Plot & Verify Testbed Results
 Generate throughput, latency, and sensing accuracy plots from metrics.csv:
