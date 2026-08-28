@@ -24,7 +24,6 @@ This repository contains two main sub-trees:
 ## 📂 Repository Structure
 
 ```
-PRB_Allocation_O-RAN_xAPP
 ├── Train_Model
 │   ├── agent.py              # D3QN Agent (Dueling Network, Replay Buffer)
 │   ├── environment.py        # 5G ISAC Network Simulation Environment
