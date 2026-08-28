@@ -24,14 +24,12 @@ This repository contains two main sub-trees:
 ## 📂 Repository Structure
 
 ```
-PRB_Allocation_O-RAN_xAPP
 ├── Train_Model
 │   ├── agent.py              # D3QN Agent (Dueling Network, Replay Buffer)
 │   ├── environment.py        # 5G ISAC Network Simulation Environment
 │   └── train.py              # Training loop & evaluation script
 ├── OAI_FlexRIC
 │   ├── generate_traffic.sh   # iperf3 & ping traffic generator script
-│   ├── isac_xapp.py          # OAI FlexRIC E2 xApp D3QN Controller
 │   └── launch_topology.py    # OAI 5G NR RFSimulator Multi-gNB & UE launcher
 ├── examples                  # xApp for RAN Slicing and information monitor
 │   ├── emulator             
@@ -39,23 +37,7 @@ PRB_Allocation_O-RAN_xAPP
 │   └── xApp                  # Source code for xApps
 │       ├── c                 # xApps based on C code
 │       └── python3           # xApps based on Python code
-│           └── xapp_isac.py  # Source code for xapp_isac
-├── Results					  # OAI/FlexRIC Testbed results
-├── requirement.txt           # Necessary Libraries and Packages
-├── .gitignore                # Git ignore rules
-└── README.md                 # Project documentation
-```
-
----
-**ISAC xAPP Structure**
-```
-openairinterface5g/
-├── xapp_isac.py         <-- [xApp Controller] Main D3QN RL Controller & FlexRIC SWIG loop
-├── environment.py            # [Environment] ISAC Simulation Model (FIM, CRLB, 3GPP UMa Channels)
-├── d3qn_isac_final.pth       # [Neural Net] Trained D3QN Model Checkpoint Weights
-├── metrics.csv               # [Data Logging] Real-time Episode Telemetry (Throughput, Latency, RMSE)
-├── plot_metrics.py           # [Visualization] Plot Generator for Results
-│
+│           └── xapp_isac.py  # Source code for OAI FlexRIC E2 xApp D3QN Controller
 ├── openair2/
 │   ├── E2AP/
 │   │   ├── RAN_FUNCTION/
@@ -69,7 +51,13 @@ openairinterface5g/
 │       ├── slicing/
 │       │   └── nr_slicingc.c     <-- [gNB MAC Slicing] NVS Subcarrier Reservation (eMBB+URLLC+Sensing)
 │       └── gNB_scheduler_dlsch.c <-- [gNB MAC Scheduler] Downlink PRB & Power Allocation Executor
-
+├── fig						  # OAI/FlexRIC Testbed results
+├── requirement.txt           # Necessary Libraries and Packages
+├── .gitignore                # Git ignore rules
+├── CMakeLists.txt            # CMakeLists
+├── LICENSE                	  # Licence
+├── flexric.conf              # FlexRIC Configurations
+└── README.md                 # Project documentation
 ```
 
 ## 🛠️ System Parameters
