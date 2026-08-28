@@ -40,9 +40,12 @@ PRB_Allocation_O-RAN_xAPP
 │       ├── c                 # xApps based on C code
 │       └── python3           # xApps based on Python code
 │           └── xapp_isac.py  # Source code for xapp_isac
-├── Results					  # OAI/FlexRIC Testbed results
+├── fig						  # OAI/FlexRIC Testbed results
 ├── requirement.txt           # Necessary Libraries and Packages
 ├── .gitignore                # Git ignore rules
+├── CMakeLists.txt            # CMakeLists
+├── LICENSE                	  # Licence
+├── flexric.conf              # FlexRIC Configurations
 └── README.md                 # Project documentation
 ```
 
