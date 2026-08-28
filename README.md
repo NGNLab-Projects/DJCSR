@@ -38,17 +38,17 @@ This repository contains two main sub-trees:
 │       ├── c                 # xApps based on C code
 │       └── python3           # xApps based on Python code
 │           └── xapp_isac.py  # Source code for OAI FlexRIC E2 xApp D3QN Controller
-├── openair2/
-│   ├── E2AP/
-│   │   ├── RAN_FUNCTION/
-│   │   │   └── CUSTOMIZED/
+├── openair2
+│   ├── E2AP
+│   │   ├── RAN_FUNCTION
+│   │   │   └── CUSTOMIZED
 │   │   │       ├── ran_func_mac.c   <-- [gNB E2 Telemetry] Thread-safe MAC stats harvester
 │   │   │       └── ran_func_kpm.c   <-- [gNB E2 Telemetry] RLC SDU delay & UE metrics
 │   │   │
-│   │   └── flexric/          # [RIC Framework] FlexRIC Near-RT RIC & Python SWIG (xapp_sdk)
+│   │   └── flexric           # [RIC Framework] FlexRIC Near-RT RIC & Python SWIG (xapp_sdk)
 │   │
-│   └── LAYER2/NR_MAC_gNB/
-│       ├── slicing/
+│   └── LAYER2/NR_MAC_gNB
+│       ├── slicing
 │       │   └── nr_slicingc.c     <-- [gNB MAC Slicing] NVS Subcarrier Reservation (eMBB+URLLC+Sensing)
 │       └── gNB_scheduler_dlsch.c <-- [gNB MAC Scheduler] Downlink PRB & Power Allocation Executor
 ├── Metrics					  # OAI/FlexRIC Metrics
