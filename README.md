@@ -50,7 +50,7 @@ PRB_Allocation_O-RAN_xAPP
 **ISAC xAPP Structure**
 ```
 openairinterface5g/
-├── xapp_isac_d3qn.py         <-- [xApp Controller] Main D3QN RL Controller & FlexRIC SWIG loop
+├── xapp_isac.py         <-- [xApp Controller] Main D3QN RL Controller & FlexRIC SWIG loop
 ├── environment.py            # [Environment] ISAC Simulation Model (FIM, CRLB, 3GPP UMa Channels)
 ├── d3qn_isac_final.pth       # [Neural Net] Trained D3QN Model Checkpoint Weights
 ├── metrics.csv               # [Data Logging] Real-time Episode Telemetry (Throughput, Latency, RMSE)
