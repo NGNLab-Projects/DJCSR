@@ -40,25 +40,6 @@ PRB_Allocation_O-RAN_xAPP
 │       ├── c                 # xApps based on C code
 │       └── python3           # xApps based on Python code
 │           └── xapp_isac.py  # Source code for xapp_isac
-├── fig						  # OAI/FlexRIC Testbed results
-├── requirement.txt           # Necessary Libraries and Packages
-├── .gitignore                # Git ignore rules
-├── CMakeLists.txt            # CMakeLists
-├── LICENSE                	  # Licence
-├── flexric.conf              # FlexRIC Configurations
-└── README.md                 # Project documentation
-```
-
----
-**ISAC xAPP Structure**
-```
-openairinterface5g/
-├── xapp_isac.py         <-- [xApp Controller] Main D3QN RL Controller & FlexRIC SWIG loop
-├── environment.py            # [Environment] ISAC Simulation Model (FIM, CRLB, 3GPP UMa Channels)
-├── d3qn_isac_final.pth       # [Neural Net] Trained D3QN Model Checkpoint Weights
-├── metrics.csv               # [Data Logging] Real-time Episode Telemetry (Throughput, Latency, RMSE)
-├── plot_metrics.py           # [Visualization] Plot Generator for Results
-│
 ├── openair2/
 │   ├── E2AP/
 │   │   ├── RAN_FUNCTION/
@@ -72,7 +53,13 @@ openairinterface5g/
 │       ├── slicing/
 │       │   └── nr_slicingc.c     <-- [gNB MAC Slicing] NVS Subcarrier Reservation (eMBB+URLLC+Sensing)
 │       └── gNB_scheduler_dlsch.c <-- [gNB MAC Scheduler] Downlink PRB & Power Allocation Executor
-
+├── fig						  # OAI/FlexRIC Testbed results
+├── requirement.txt           # Necessary Libraries and Packages
+├── .gitignore                # Git ignore rules
+├── CMakeLists.txt            # CMakeLists
+├── LICENSE                	  # Licence
+├── flexric.conf              # FlexRIC Configurations
+└── README.md                 # Project documentation
 ```
 
 ## 🛠️ System Parameters
