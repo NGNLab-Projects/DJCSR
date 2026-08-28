@@ -48,7 +48,7 @@ PRB_Allocation_O-RAN_xAPP
 
 ---
 **ISAC xAPP Structure**
-
+```
 openairinterface5g/
 ├── xapp_isac_d3qn.py         <-- [xApp Controller] Main D3QN RL Controller & FlexRIC SWIG loop
 ├── environment.py            # [Environment] ISAC Simulation Model (FIM, CRLB, 3GPP UMa Channels)
@@ -70,7 +70,7 @@ openairinterface5g/
 │       │   └── nr_slicingc.c     <-- [gNB MAC Slicing] NVS Subcarrier Reservation (eMBB+URLLC+Sensing)
 │       └── gNB_scheduler_dlsch.c <-- [gNB MAC Scheduler] Downlink PRB & Power Allocation Executor
 
-
+```
 
 ## 🛠️ System Parameters
 
