@@ -51,6 +51,9 @@ This repository contains two main sub-trees:
 │       ├── slicing/
 │       │   └── nr_slicingc.c     <-- [gNB MAC Slicing] NVS Subcarrier Reservation (eMBB+URLLC+Sensing)
 │       └── gNB_scheduler_dlsch.c <-- [gNB MAC Scheduler] Downlink PRB & Power Allocation Executor
+├── Metrics					  # OAI/FlexRIC Metrics
+│   ├── plot_metrics.py       # Plot the metrics (Throughput, Latency, RMSE)
+│   ├── metrics.csv           # Metrics of each epoch
 ├── fig						  # OAI/FlexRIC Testbed results
 ├── requirement.txt           # Necessary Libraries and Packages
 ├── .gitignore                # Git ignore rules
