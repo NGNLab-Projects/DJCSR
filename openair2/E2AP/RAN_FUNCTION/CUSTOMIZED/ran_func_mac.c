@@ -18,7 +18,10 @@ bool read_mac_sm(void* data)
 
   mac->msg.tstamp = time_now_us();
 
-  NR_UEs_t *UE_info = &RC.nrmac[mod_id]->UE_info;
+  gNB_MAC_INST *mac_inst = RC.nrmac[0];
+  NR_SCHED_LOCK(&mac_inst->sched_lock);
+  
+  NR_UEs_t *UE_info = &mac_inst->UE_info;
   size_t num_ues = 0;
   UE_iterator(UE_info->connected_ue_list, ue) {
     if (ue)
@@ -31,25 +34,23 @@ bool read_mac_sm(void* data)
     assert(mac->msg.ue_stats != NULL && "Memory exhausted" );
   }
 
-  gNB_MAC_INST *mac_inst = RC.nrmac[0];
-  NR_SCHED_LOCK(&mac_inst->sched_lock);
   size_t i = 0; //TODO
   UE_iterator(UE_info->connected_ue_list, UE) {
     const NR_UE_sched_ctrl_t* sched_ctrl = &UE->UE_sched_ctrl;
     mac_ue_stats_impl_t* rd = &mac->msg.ue_stats[i];
 
-    rd->frame = RC.nrmac[mod_id]->frame;
+    rd->frame = mac_inst->frame;
     rd->slot = 0; // previously had slot info, but the gNB runs multiple slots
                   // in parallel, so this has no real meaning
 
     rd->dl_aggr_tbs = UE->mac_stats.dl.total_bytes;
     rd->ul_aggr_tbs = UE->mac_stats.ul.total_bytes;
 
-    if (is_dl_slot(rd->slot, &RC.nrmac[mod_id]->frame_structure)) {
+    if (is_dl_slot(rd->slot, &mac_inst->frame_structure)) {
       rd->dl_curr_tbs = UE->mac_stats.dl.current_bytes;
       rd->dl_sched_rb = UE->mac_stats.dl.current_rbs;
     }
-    if (is_ul_slot(rd->slot, &RC.nrmac[mod_id]->frame_structure)) {
+    if (is_ul_slot(rd->slot, &mac_inst->frame_structure)) {
       rd->ul_curr_tbs = UE->mac_stats.ul.current_bytes;
       rd->ul_sched_rb = UE->mac_stats.ul.current_rbs;
     }
