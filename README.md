@@ -50,8 +50,8 @@ This repository contains two main sub-trees:
 │   └── LAYER2
 │   	├── NR_MAC_gNB
 │       │	├── slicing
-│       │	│   └── nr_slicingc.c     <-- [gNB MAC Slicing] NVS Subcarrier Reservation
-│       │   │── gNB_scheduler_dlsch.c <-- [gNB MAC Scheduler] Downlink PRB & Power Allocation Executor
+│       │	│   └── nr_slicingc.c     <-- NVS Subcarrier Reservation
+│       │   │── gNB_scheduler_dlsch.c <-- Downlink PRB & Power Allocation Executor
 ├── Metrics					  # OAI/FlexRIC Metrics
 │   ├── plot_metrics.py       # Plot the metrics
 │   ├── metrics.csv           # Metrics of each epoch
