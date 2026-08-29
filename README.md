@@ -42,10 +42,10 @@ This repository contains two main sub-trees:
 │   ├── E2AP
 │   │   ├── RAN_FUNCTION
 │   │   │   └── CUSTOMIZED
-│   │   │       ├── ran_func_mac.c   <-- [gNB E2 Telemetry] Thread-safe MAC stats harvester
-│   │   │       └── ran_func_kpm.c   <-- [gNB E2 Telemetry] RLC SDU delay & UE metrics
+│   │   │       ├── ran_func_mac.c   <-- Thread-safe MAC stats harvester
+│   │   │       └── ran_func_kpm.c   <-- RLC SDU delay & UE metrics
 │   │   │
-│   │   └── flexric           # [RIC Framework] FlexRIC Near-RT RIC & Python SWIG (xapp_sdk)
+│   │   └── flexric           # FlexRIC Near-RT RIC & Python SWIG (xapp_sdk)
 │   │
 │   └── LAYER2
 │   	├── NR_MAC_gNB
