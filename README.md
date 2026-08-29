@@ -25,7 +25,7 @@ This repository contains two main sub-trees:
 
 ```
 ├── Train_Model
-│   ├── agent.py              # D3QN Agent (Dueling Network, Replay Buffer)
+│   ├── agent.py              # D3QN Agent
 │   ├── environment.py        # 5G ISAC Network Simulation Environment
 │   └── train.py              # Training loop & evaluation script
 ├── OAI_FlexRIC
@@ -49,10 +49,10 @@ This repository contains two main sub-trees:
 │   │
 │   └── LAYER2/NR_MAC_gNB
 │       ├── slicing
-│       │   └── nr_slicingc.c     <-- [gNB MAC Slicing] NVS Subcarrier Reservation (eMBB+URLLC+Sensing)
+│       │   └── nr_slicingc.c     <-- [gNB MAC Slicing] NVS Subcarrier Reservation
 │       └── gNB_scheduler_dlsch.c <-- [gNB MAC Scheduler] Downlink PRB & Power Allocation Executor
 ├── Metrics					  # OAI/FlexRIC Metrics
-│   ├── plot_metrics.py       # Plot the metrics (Throughput, Latency, RMSE)
+│   ├── plot_metrics.py       # Plot the metrics
 │   ├── metrics.csv           # Metrics of each epoch
 ├── fig						  # OAI/FlexRIC Testbed results
 ├── requirement.txt           # Necessary Libraries and Packages
