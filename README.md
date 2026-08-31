@@ -37,10 +37,10 @@ As 5G-Advanced and 6G networks evolve toward **Integrated Sensing and Communicat
 │           └── xapp_isac.py  # Source code for OAI FlexRIC E2 xApp D3QN Controller
 ├── oai-workshops
 │   ├── cn
-│   ├── ran
-│   │   ├── conf
-│   │	│	└── isac_setup
-│   │   ├── README.md
+│   └── ran
+│       ├── conf
+│    	│	└── isac_setup
+│       └── README.md
 ├── openair2
 │   ├── E2AP
 │   │   ├── RAN_FUNCTION
