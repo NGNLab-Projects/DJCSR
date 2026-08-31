@@ -58,10 +58,10 @@ This repository contains two main sub-trees:
 │   │   └── flexric           # FlexRIC Near-RT RIC & Python SWIG (xapp_sdk)
 │   │
 │   └── LAYER2
-│   	├── NR_MAC_gNB
-│       │	├── slicing
-│       │	│   └── slicing.c     	 <-- NVS Subcarrier Reservation
-│       │   │── gNB_scheduler_dlsch.c <-- Downlink MAC Scheduler & DLSCH PDU Assembly
+│   	└── NR_MAC_gNB
+│        	├── slicing
+│        	│   └── slicing.c     	 <-- NVS Subcarrier Reservation
+│           └── gNB_scheduler_dlsch.c <-- Downlink MAC Scheduler & DLSCH PDU Assembly
 ├── Metrics					  # OAI/FlexRIC Metrics
 │   ├── plot_metrics.py       # Plot the metrics
 │   ├── metrics.csv           # Metrics of each epoch
