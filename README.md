@@ -182,11 +182,11 @@ sudo ~/openair2/E2AP/flexric/build/examples/ric/nearRT-RIC
 #### Step 3: Start a gNB
 ```bash
 	cd ~/openairinterface5g/cmake_targets/ran_build/build
-	sudo ./nr-softmodem -O ~/openairinterface5g/targets/PROJECTS/GENERIC-NR-5GC/CONF/gnb.sa.band78.fr1.106PRB.usrpb210.conf --rfsim -E --gNBs.[0].min_rxtxtime 6
+	sudo ./nr-softmodem -O ~/openairinterface5g/targets/PROJECTS/GENERIC-NR-5GC/CONF/gnb.sa.band78.fr1.65PRB.usrpb210.conf --rfsim -E --gNBs.[0].min_rxtxtime 6
 ```
 #### Step 4: Start a UE
   ```bash
-	sudo ./nr-uesoftmodem -r 106 --numerology 1 --band 78 -C 3619200000 --rfsim -O
+	sudo ./nr-uesoftmodem -r 65 --numerology 1 --band 78 -C 3619200000 --rfsim -O
 	~/openairinterface5g/targets/PROJECTS/GENERIC-NR-5GC/CONF/ue.conf -E --num-ues 10
   ```
 #### Step 5: Launch Network Topology (3 gNBs + 10 UEs)
