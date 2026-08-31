@@ -31,6 +31,7 @@ This repository contains two main sub-trees:
 ├── OAI_FlexRIC
 │   ├── generate_traffic.sh   # iperf3 & ping traffic generator script
 │   └── launch_topology.py    # OAI 5G NR RFSimulator Multi-gNB & UE launcher
+│   └── d3qn_isac_final.pth   # Trained Inference
 ├── examples                  # xApp for RAN Slicing and information monitor
 │   ├── emulator             
 │   ├── ric                   # RIC including E2 interface
