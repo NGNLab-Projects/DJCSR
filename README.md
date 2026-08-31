@@ -31,6 +31,7 @@ This repository contains two main sub-trees:
 ├── OAI_FlexRIC
 │   ├── generate_traffic.sh   # iperf3 & ping traffic generator script
 │   └── launch_topology.py    # OAI 5G NR RFSimulator Multi-gNB & UE launcher
+│   └── d3qn_isac_final.pth   # Trained Inference
 ├── examples                  # xApp for RAN Slicing and information monitor
 │   ├── emulator             
 │   ├── ric                   # RIC including E2 interface
@@ -50,7 +51,7 @@ This repository contains two main sub-trees:
 │   └── LAYER2
 │   	├── NR_MAC_gNB
 │       │	├── slicing
-│       │	│   └── nr_slicingc.c     <-- NVS Subcarrier Reservation
+│       │	│   └── slicing.c     	 <-- NVS Subcarrier Reservation
 │       │   │── gNB_scheduler_dlsch.c <-- Downlink MAC Scheduler & DLSCH PDU Assembly
 ├── Metrics					  # OAI/FlexRIC Metrics
 │   ├── plot_metrics.py       # Plot the metrics
