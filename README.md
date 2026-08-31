@@ -39,6 +39,15 @@ This repository contains two main sub-trees:
 │       ├── c                 # xApps based on C code
 │       └── python3           # xApps based on Python code
 │           └── xapp_isac.py  # Source code for OAI FlexRIC E2 xApp D3QN Controller
+├── oai-workshops
+│   ├── cn
+│   │   ├── conf
+│   │   ├── docker
+│   │   └── README.md
+│   ├── ran
+│   │   ├── conf
+│   │	│	└── isac_setup
+│   │   ├── README.md
 ├── openair2
 │   ├── E2AP
 │   │   ├── RAN_FUNCTION
