@@ -39,7 +39,7 @@ As 5G-Advanced and 6G networks evolve toward **Integrated Sensing and Communicat
 │   ├── cn
 │   └── ran
 │       └── conf
-│    		└── isac_setup
+│    		└── isac_setup	  # gNBs and UEs Configuration
 ├── openair2
 │   ├── E2AP
 │   │   ├── RAN_FUNCTION
