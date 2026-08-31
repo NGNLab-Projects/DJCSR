@@ -38,9 +38,8 @@ As 5G-Advanced and 6G networks evolve toward **Integrated Sensing and Communicat
 ├── oai-workshops
 │   ├── cn
 │   └── ran
-│       ├── conf
-│    	│	└── isac_setup
-│       └── README.md
+│       └── conf
+│    		└── isac_setup
 ├── openair2
 │   ├── E2AP
 │   │   ├── RAN_FUNCTION
