@@ -15,10 +15,6 @@ An Open RAN (O-RAN) Near-Real-Time RIC xApp for **Dynamic Subcarrier Allocation*
 
 As 5G-Advanced and 6G networks evolve toward **Integrated Sensing and Communication (ISAC)**, base stations (gNBs) must dynamically share spectrum and subcarriers between target radar sensing and multi-tenant communication services (**eMBB** and **URLLC**).
 
-This repository contains two main sub-trees:
-1. **`Train Model`**: Standalone D3QN reinforcement learning simulation suite.
-2. **`OAI_FlexRIC`**: Live OpenAirInterface (OAI) & FlexRIC E2AP xApp deployment scripts.
-
 ---
 
 ## 📂 Repository Structure
