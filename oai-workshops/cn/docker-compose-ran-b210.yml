@@ -1,0 +1,33 @@
+### OAI official container registry is docker hub docker.io/oaisoftwarealliance but for this workshop we are using our ghcr.io/openairinterface registry to avoid issues with docker hub limitation
+services:
+    oai-gnb:
+        image: ghcr.io/openairinterface/oai-gnb:2025.w45
+        container_name: sa-b200-gnb
+        cap_drop:
+            - ALL
+        cap_add:
+            - SYS_NICE
+            - IPC_LOCK
+        ulimits:
+          core: -1 # for core dumps
+        environment:
+            USE_B2XX: 'yes'
+            ## You need to use uhd_usrp_probe and then use the serial number of your USRP
+            USE_ADDITIONAL_OPTIONS: --RUs.[0].sdr_addrs serial=XXXXXX --continuous-tx --log_config.global_log_options level,nocolor,time,line_num,function
+        devices:
+            - /dev/bus/usb/:/dev/bus/usb/
+        volumes:
+            - ./conf/gnb.sa.bandn78.fr1.51PRB.usrpb210.yaml:/opt/oai-gnb/etc/gnb.yaml
+        network_mode: "host"
+        #entrypoint: /bin/bash -c "sleep infinity"
+        healthcheck:
+            # pgrep does NOT work
+            test: /bin/bash -c "ps aux | grep -v grep | grep -c softmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+networks:
+    public_net:
+        name: oaiworkshop
+        external: true
+
