@@ -64,10 +64,14 @@ class D3QN(nn.Module):
 # -----------------------------------------------------------------------------
 isac_env = ISACEnvironment()
 
+# Load the Trained Model
+script_dir = os.path.dirname(os.path.abspath(__file__))
 ckpt_paths = [
-    '/home/ngnlab/d3qn_isac_final.pth',
-    '/home/ngnlab/openairinterface5g/d3qn_isac_final.pth'
-]
+    os.path.abspath(os.path.join(script_dir, "../../../OAI_FlexRIC/d3qn_isac_final.pth")),
+    os.path.abspath(os.path.join(script_dir, "../../OAI_FlexRIC/d3qn_isac_final.pth")),
+    "/home/ngnlab/d3qn_isac_final.pth",
+    "/home/ngnlab/openairinterface5g/d3qn_isac_final.pth",
+    "d3qn_isac_final.pth"]
 ckpt_path = next((p for p in ckpt_paths if os.path.exists(p)), None)
 
 STATE_DIM = isac_env.state_dim
@@ -255,7 +259,7 @@ def save_testbed_results_plot():
         if len(df) == 0:
             return
 
-        # IEEE Style Setup
+        # Journal Style Setup
         plt.rcParams['font.family'] = 'serif'
         plt.rcParams.update({
             'font.family': 'serif',
@@ -494,6 +498,6 @@ if __name__ == "__main__":
     for h in rlc_hndlrs: ric.rm_report_rlc_sm(h)
     while ric.try_stop() == 0: time.sleep(1)
     
-    # Auto-generate IEEE JSAC Testbed_Results.pdf
+    # Auto-generate JSAC Testbed_Results.pdf
     save_testbed_results_plot()
     print('ISAC RL xApp stopped')
