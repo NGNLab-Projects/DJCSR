@@ -43,7 +43,7 @@ As 5G-Advanced and 6G networks evolve toward **Integrated Sensing and Communicat
 ├── openair2
 │   ├── E2AP
 │   │   ├── RAN_FUNCTION
-│   │   │   └── CUSTOMIZED
+│   │   │   └── CUSTOMIZED	  # Monitor Functions
 │   │   │       ├── ran_func_mac.c   <-- Thread-safe MAC stats harvester
 │   │   │       └── ran_func_kpm.c   <-- RLC SDU delay & UE metrics
 │   │   └── flexric           # FlexRIC Near-RT RIC & Python SWIG (xapp_sdk)
