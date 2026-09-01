@@ -195,7 +195,7 @@ sudo python3 launch_topology.py
 ```
 **You can use the following commands to check gNB and UEs Information:**
 ```bash
-docker logs oai-amf -f	
+docker logs -f oai-amf | grep --line-buffered -A 25 "gNBs' Information"	
 ```
 **gNBs and UEs Information:**
 ```bash
