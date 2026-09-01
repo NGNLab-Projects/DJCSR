@@ -194,9 +194,9 @@ sudo ~/openair2/E2AP/flexric/build/examples/ric/nearRT-RIC
 sudo python3 launch_topology.py
 ```
 **You can use the following commands to check gNB and UEs Information:**
-```bash
-docker logs oai-amf -f	
-```
+	```bash
+	docker logs oai-amf -f	
+	```
 **gNBs and UEs Information:**
 	
 
