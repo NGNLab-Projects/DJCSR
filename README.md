@@ -197,11 +197,11 @@ sudo python3 launch_topology.py
 ```bash
 sudo bash generate_traffic.sh
 ```
-**You can use the following commands to check gNB and UEs Information:**
+##### You can use the following commands to check gNB and UEs Information:
 ```bash
 docker logs oai-amf -f	
 ```
-**gNBs and UEs Information:**
+##### gNBs and UEs Information:
 ```bash
 [2026-09-01 13:55:35.592] [amf_app] [info] 
    |------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -234,7 +234,7 @@ Run the xApp controller to perform real-time E2 control using the trained policy
 python3 ~/openair2/E2AP/flexric/examples/xApp/python3/xapp_isac.py
 ```
 ##### Closed-Loop D3QN Agent Convergence & E2SM-RC Control Telemetry
-The snippet below demonstrates real-time E2 control exchange (`E2SM-RC` NVS capacity slice allocation) and the D3QN agent's score convergence from Episode 10 (`score: 1613.3`) to Episode 200 (`score: 5513.5`):
+The below demonstrates real-time E2 control exchange (`E2SM-RC` NVS capacity slice allocation) and the D3QN agent's score convergence from Episode 10 (`score: 1613.3`) to Episode 200 (`score: 5513.5`):
 ```bash
 [xApp]: CONTROL-REQUEST tx 
 [xApp]: CONTROL ACK rx
