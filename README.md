@@ -233,6 +233,45 @@ Run the xApp controller to perform real-time E2 control using the trained policy
 ```bash
 python3 ~/openair2/E2AP/flexric/examples/xApp/python3/xapp_isac.py
 ```
+```bash
+[xApp]: CONTROL-REQUEST tx 
+[xApp]: CONTROL ACK rx
+[xApp]: Successfully received CONTROL response
+# of episode :10, avg score : 1613.3, optimization step: 100
+ADD NVS DL SLICE: id 1, label eMBB, conf 1(capacity), pct_reserved 0.596154
+ADD NVS DL SLICE: id 2, label URLLC, conf 1(capacity), pct_reserved 0.4
+
+# of episode :20, avg score : 1562.2, optimization step: 200
+# of episode :30, avg score : 1920.9, optimization step: 300
+# of episode :40, avg score : 2151.6, optimization step: 400
+# of episode :50, avg score : 2228.6, optimization step: 500
+# of episode :60, avg score : 2596.4, optimization step: 600
+# of episode :70, avg score : 2673.2, optimization step: 700
+
+# of episode :200, avg score : 5513.5, optimization step: 2000
+```
+## 📊 Closed-Loop D3QN Agent Convergence & E2SM-RC Control Telemetry
+
+The snippet below demonstrates real-time E2 control exchange (`E2SM-RC` NVS capacity slice allocation) and the D3QN agent's score convergence from Episode 10 (`score: 1613.3`) to Episode 200 (`score: 5513.5`):
+
+```bash
+[xApp]: CONTROL-REQUEST tx 
+[xApp]: CONTROL ACK rx
+[xApp]: Successfully received CONTROL response
+# of episode :10, avg score : 1613.3, optimization step: 100
+ADD NVS DL SLICE: id 1, label eMBB, conf 1(capacity), pct_reserved 0.596154
+ADD NVS DL SLICE: id 2, label URLLC, conf 1(capacity), pct_reserved 0.400000
+
+# of episode :20, avg score : 1562.2, optimization step: 200
+# of episode :30, avg score : 1920.9, optimization step: 300
+# of episode :40, avg score : 2151.6, optimization step: 400
+# of episode :50, avg score : 2228.6, optimization step: 500
+# of episode :60, avg score : 2596.4, optimization step: 600
+# of episode :70, avg score : 2673.2, optimization step: 700
+
+# of episode :200, avg score : 5513.5, optimization step: 2000
+```
+
 #### Step 8: Plot & Verify Testbed Results
 Generate throughput, latency, and sensing accuracy plots from metrics.csv:
 ```bash
