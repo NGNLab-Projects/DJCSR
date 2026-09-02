@@ -193,6 +193,10 @@ sudo ~/openair2/E2AP/flexric/build/examples/ric/nearRT-RIC
 ```bash
 sudo python3 launch_topology.py
 ```
+#### Step 6: Generate Background Traffic (eMBB + URLLC)
+```bash
+sudo bash generate_traffic.sh
+```
 **You can use the following commands to check gNB and UEs Information:**
 ```bash
 docker logs oai-amf -f	
@@ -223,10 +227,6 @@ docker logs oai-amf -f
    |   10   |   5GMM-REGISTERED  |   001010000000109  |00101010041379311732|        0x01        |        0x0A        |       001,01       |      0000e014e     |
    |-----------------------------------------------------------------------------------------------------------------------------------------------------------|
 
-```
-#### Step 6: Generate Background Traffic (eMBB + URLLC)
-```bash
-sudo bash generate_traffic.sh
 ```
 #### Step 7: Run ISAC xApp Controller
 Run the xApp controller to perform real-time E2 control using the trained policy:
