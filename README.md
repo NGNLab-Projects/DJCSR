@@ -133,7 +133,6 @@ pip install -r requirements.txt
   	git clone https://gitlab.eurecom.fr/mosaic5g/flexric.git
 	cd flexric
 	git fetch --all --tags
-	git checkout 2024.w12
 	mkdir -p build && cd build
 	cmake -DCMAKE_C_COMPILER=gcc-12 \
 	      -DCMAKE_CXX_COMPILER=g++-12 \
@@ -149,7 +148,6 @@ pip install -r requirements.txt
 	git clone https://gitlab.eurecom.fr/oai/openairinterface5g.git
 	cd openairinterface5g
 	git fetch --all --tags
-	git checkout 2024.w24
 ```
 ```bash
 	cd cmake_targets
