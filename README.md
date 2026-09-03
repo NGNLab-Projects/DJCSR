@@ -126,7 +126,7 @@ pip install -r requirements.txt
 ```bash
 	sudo apt update && sudo apt install -y \
 	build-essential cmake ninja-build gcc-12 g++-12 git bison flex swig \
-	python3-dev python3-pip python3-numpy libsctp-dev libasn1c-dev ccache pcre2-utils
+	python3-dev python3-pip python3-numpy libsctp-dev libpcre2-dev ccache
 ```
 - **Clone & Build FlexRIC (v1.0, 2024.w12):**
 ```bash
