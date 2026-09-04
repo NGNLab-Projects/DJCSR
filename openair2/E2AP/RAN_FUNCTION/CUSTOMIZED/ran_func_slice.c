@@ -22,8 +22,7 @@ void read_slice_setup_sm(void* data)
 {
   assert(data != NULL);
 //  assert(data->type == SLICE_AGENT_IF_E2_SETUP_ANS_V0 );
-
-  assert(0 !=0 && "Not supported");
+  printf("[E2 Agent]: SLICE setup is not supported\n");
 }
 
 sm_ag_if_ans_t write_ctrl_slice_sm(void const* data)
@@ -33,6 +32,8 @@ sm_ag_if_ans_t write_ctrl_slice_sm(void const* data)
 
   slice_ctrl_req_data_t const* slice_req_ctrl = (slice_ctrl_req_data_t const* )data; // &data->slice_req_ctrl;
   slice_ctrl_msg_t const* msg = &slice_req_ctrl->msg;
+  sm_ag_if_ans_t ans = {.type = CTRL_OUTCOME_SM_AG_IF_ANS_V0};
+  ans.ctrl_out.type = SLICE_AGENT_IF_CTRL_ANS_V0;
 
   if(msg->type == SLICE_CTRL_SM_V0_ADD){
     printf("[E2 Agent]: SLICE CONTROL ADD rx\n");
@@ -41,11 +42,9 @@ sm_ag_if_ans_t write_ctrl_slice_sm(void const* data)
   } else if (msg->type == SLICE_CTRL_SM_V0_UE_SLICE_ASSOC){
     printf("[E2 Agent]: SLICE CONTROL ASSOC rx\n");
   } else {
-    assert(0!=0 && "Unknown msg_type!");
+    printf("[E2 Agent]: Unknown SLICE control message type: %d\n", msg->type);
   }
 
-  sm_ag_if_ans_t ans = {.type = CTRL_OUTCOME_SM_AG_IF_ANS_V0};
-  ans.ctrl_out.type = SLICE_AGENT_IF_CTRL_ANS_V0;
   return ans;
 
 }
