@@ -160,7 +160,7 @@ pip install -r requirements.txt
 ### 1. Train Model (Simulation)
 The simulation pipeline uses `environment.py` (ISAC Environment) and `agent.py` (D3QN Architecture) to train the resource allocation policy.
 ```bash
-cd “Train Model"
+cd “Train_Model"
 python train.py
 # Output: d3qn_isac_final.pth
 ```
