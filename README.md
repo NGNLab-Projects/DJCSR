@@ -34,7 +34,7 @@ As 5G-Advanced and 6G networks evolve toward **Integrated Sensing and Communicat
 │   └── xApp                  # Source code for xApps
 │       ├── c                 # xApps based on C code
 │       └── python3           # xApps based on Python code
-│           └── isac_xapp.py  # Source code for OAI FlexRIC E2 xApp D3QN Controller
+│           └── xapp_isac.py  # Source code for OAI FlexRIC E2 xApp D3QN Controller
 ├── oai-workshops
 │   ├── cn
 │   └── ran
