@@ -3,10 +3,23 @@
 import torch
 import torch.nn as nn
 import numpy as np
+import os
 
 import sys
+<<<<<<< HEAD:openair2/E2AP/flexric/examples/xApp/python3/xapp_isac.py
 sys.path.append('/openairinterface5g')
 sys.path.append('/openairinterface5g/openair2/E2AP/flexric/build/src/xApp/swig')
+=======
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[6]
+TRAIN_MODEL_DIR = PROJECT_ROOT / "Train_Model"
+SWIG_DIR = Path(os.environ["FLEXRIC_SWIG_DIR"]) if "FLEXRIC_SWIG_DIR" in os.environ else None
+
+sys.path.insert(0, str(TRAIN_MODEL_DIR))
+if SWIG_DIR is not None:
+    sys.path.insert(0, str(SWIG_DIR))
+>>>>>>> 96498cbe509311274ca7c9a858744389787155e6:openair2/E2AP/flexric/examples/xApp/python3/xapp_isac.py
 
 import xapp_sdk as ric
 import time
@@ -15,7 +28,6 @@ from collections import deque
 from datetime import datetime
 import threading
 import csv
-import os
 
 from environment import ISACEnvironment
 
@@ -65,6 +77,7 @@ class D3QN(nn.Module):
 isac_env = ISACEnvironment()
 
 # Load the Trained Model
+<<<<<<< HEAD:openair2/E2AP/flexric/examples/xApp/python3/xapp_isac.py
 script_dir = os.path.dirname(os.path.abspath(__file__))
 ckpt_paths = [
     os.path.abspath(os.path.join(script_dir, "../../../OAI_FlexRIC/d3qn_isac_final.pth")),
@@ -72,27 +85,26 @@ ckpt_paths = [
     "/home/d3qn_isac_final.pth",
     "d3qn_isac_final.pth"]
 ckpt_path = next((p for p in ckpt_paths if os.path.exists(p)), None)
+=======
+ckpt_path = PROJECT_ROOT / "OAI_FlexRIC" / "d3qn_isac_final.pth"
+>>>>>>> 96498cbe509311274ca7c9a858744389787155e6:openair2/E2AP/flexric/examples/xApp/python3/xapp_isac.py
 
 STATE_DIM = isac_env.state_dim
 ACTION_DIM = isac_env.action_dim
 
-if ckpt_path:
-    try:
-        checkpoint = torch.load(ckpt_path, map_location='cpu')
-        sd = checkpoint['state_dict'] if isinstance(checkpoint, dict) and 'state_dict' in checkpoint else checkpoint
-        if isinstance(sd, dict) and 'advantage_stream.2.weight' in sd:
-            ACTION_DIM = sd['advantage_stream.2.weight'].shape[0]
-            STATE_DIM = sd['feature.0.weight'].shape[1]
-        model = D3QN(STATE_DIM, ACTION_DIM)
-        model.load_state_dict(sd)
-        model.eval()
-        print(f"Successfully loaded D3QN model (State Dim: {STATE_DIM}, Action Dim: {ACTION_DIM}) from {ckpt_path}")
-    except Exception as e:
-        print(f"WARNING: Failed to load model: {e}")
-        model = D3QN(STATE_DIM, ACTION_DIM)
-else:
-    print(f"WARNING: File not found in {ckpt_paths}")
-    model = D3QN(STATE_DIM, ACTION_DIM)
+if not ckpt_path.is_file():
+    raise FileNotFoundError(f"Required D3QN checkpoint not found: {ckpt_path}")
+
+checkpoint = torch.load(ckpt_path, map_location='cpu', weights_only=True)
+sd = checkpoint['state_dict'] if isinstance(checkpoint, dict) and 'state_dict' in checkpoint else checkpoint
+if not isinstance(sd, dict) or 'advantage_stream.2.weight' not in sd:
+    raise ValueError(f"Invalid D3QN checkpoint format: {ckpt_path}")
+ACTION_DIM = sd['advantage_stream.2.weight'].shape[0]
+STATE_DIM = sd['feature.0.weight'].shape[1]
+model = D3QN(STATE_DIM, ACTION_DIM)
+model.load_state_dict(sd, strict=True)
+model.eval()
+print(f"Successfully loaded D3QN model (State Dim: {STATE_DIM}, Action Dim: {ACTION_DIM}) from {ckpt_path}")
 
 # -----------------------------------------------------------------------------
 # MAC/RLC Metrics Tracking (using exact layout from your previous code)
@@ -249,7 +261,7 @@ def save_testbed_results_plot():
         import pandas as pd
         import matplotlib.pyplot as plt
 
-        csv_path = '/home/ngnlab/openairinterface5g/metrics.csv'
+        csv_path = PROJECT_ROOT / "Metrics" / "live_metrics.csv"
         if not os.path.exists(csv_path) or os.path.getsize(csv_path) == 0:
             print("[WARNING] metrics.csv is empty, skipping plot generation.")
             return
@@ -375,16 +387,12 @@ if __name__ == "__main__":
         
         print(f"[SUB] Subscribed to MAC/RLC for E2 Node {i}")
 
-    # Prepare ISAC env step vars
-    init_state = isac_env.reset()
-    state_tracker.update_env_state(init_state)
-
     try:
         time.sleep(2)
         print("Starting ISAC RL Loop...")
         
         # Setup CSV Logging (Append/Resume Mode)
-        csv_path = '/home/ngnlab/openairinterface5g/metrics.csv'
+        csv_path = PROJECT_ROOT / "Metrics" / "live_metrics.csv"
         file_exists = os.path.exists(csv_path) and os.path.getsize(csv_path) > 0
         start_episode = 1
         
@@ -423,29 +431,30 @@ if __name__ == "__main__":
                 # 2. Forward Pass (Action Selection)
                 action_idx = model.get_action(state)
                 
-                # 3. Simulate step to get new SC counts and decode action
-                next_state, _, _, info = isac_env.step(action_idx)
-                state_tracker.update_env_state(next_state)
-                
-                # 4. Extract metrics
-                total_sc = float(isac_env.N_sc)
-                prb_embb = max(isac_env.embb_sc / total_sc, 0.01)
-                prb_urllc = max(isac_env.urllc_sc / total_sc, 0.01)
-                
+                # 3. Decode the action without advancing the offline simulator.
+                resource_idx = action_idx // len(isac_env.power_ratios)
                 power_idx = action_idx % len(isac_env.power_ratios)
+                _, _, step_size, _ = isac_env.action_table[resource_idx]
+                _, embb_direction, _, _ = isac_env.action_table[resource_idx]
+                current_embb = state_tracker.get_isac_state()[8] * isac_env.N_sc
+                current_urllc = state_tracker.get_isac_state()[7] * isac_env.N_sc
+                embb_sc = np.clip(current_embb + embb_direction * step_size, isac_env.num_embb, isac_env.N_sc)
+                urllc_sc = np.clip(current_urllc - embb_direction * step_size, isac_env.num_urllc, isac_env.N_sc)
+                total_sc = max(embb_sc + urllc_sc, 1.0)
+                prb_embb = float(embb_sc / total_sc)
+                prb_urllc = float(urllc_sc / total_sc)
                 pwr_sense, pwr_urllc, pwr_embb = isac_env.power_ratios[power_idx]
-                
-                # Feedback the chosen power to unfreeze the state for the next iteration
-                state_tracker.update_power(pwr_sense, pwr_urllc, pwr_embb)
 
-                # Use Digital Twin capacity/latency for academic plotting alignment
-                ep_embb_tp.append(info.get('R_embb', 0.0) / 1e6)
-                ep_urllc_lat.append(info.get('latency_ms', 0.0))
-                ep_rmse.append(info.get('range_rmse', 0.0))
+                # 4. Extract live E2 metrics for logging.
+                total_sc = float(isac_env.N_sc)
+                metrics = state_tracker.metrics
+                ep_embb_tp.append(metrics["embb"]["throughput"])
+                ep_urllc_tp.append(metrics["urllc"]["throughput"])
+                ep_urllc_lat.append(metrics["urllc"]["latency"])
                 ep_prb_e.append(prb_embb)
                 ep_prb_u.append(prb_urllc)
-                ep_urllc_tp.append(info.get('R_urllc', 0.0) / 1e6)
-                ep_crlb.append(info.get('crlb_range', 0.0))
+                ep_rmse.append(float("nan"))
+                ep_crlb.append(float("nan"))
 
                 # 5. Send Control to E2 Node
                 slice_config = {
