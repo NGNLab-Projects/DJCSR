@@ -5,8 +5,8 @@ import torch.nn as nn
 import numpy as np
 
 import sys
-sys.path.append('/home/ngnlab/openairinterface5g')
-sys.path.append('/home/ngnlab/openairinterface5g/openair2/E2AP/flexric/build/src/xApp/swig')
+sys.path.append('/openairinterface5g')
+sys.path.append('/openairinterface5g/openair2/E2AP/flexric/build/src/xApp/swig')
 
 import xapp_sdk as ric
 import time
@@ -69,8 +69,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 ckpt_paths = [
     os.path.abspath(os.path.join(script_dir, "../../../OAI_FlexRIC/d3qn_isac_final.pth")),
     os.path.abspath(os.path.join(script_dir, "../../OAI_FlexRIC/d3qn_isac_final.pth")),
-    "/home/ngnlab/d3qn_isac_final.pth",
-    "/home/ngnlab/openairinterface5g/d3qn_isac_final.pth",
+    "/home/d3qn_isac_final.pth",
     "d3qn_isac_final.pth"]
 ckpt_path = next((p for p in ckpt_paths if os.path.exists(p)), None)
 
