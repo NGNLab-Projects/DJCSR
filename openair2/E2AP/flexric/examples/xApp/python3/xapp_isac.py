@@ -328,37 +328,11 @@ def save_testbed_results_plot():
         axs[2].legend(fontsize=6.5, loc='upper right')
 
         plt.tight_layout()
-        pdf_path = '/home/ngnlab/openairinterface5g/Testbed_Results.pdf'
-        png_path = '/home/ngnlab/openairinterface5g/Testbed_Results.png'
+        pdf_path = '/openairinterface5g/fig/Testbed_Results.pdf'
+        png_path = '/openairinterface5g/fig/Testbed_Results.png'
         plt.savefig(pdf_path, format='pdf', bbox_inches='tight')
         plt.savefig(png_path, format='png', dpi=1000, bbox_inches='tight')
         plt.close(fig)
-
-        # Also generate exact single-panel throughput plot matching reference style
-        t_ms = df['iteration'].values * 10.0
-        embb_tp = df['embb_throughput'].values
-        urllc_tp = df['urllc_throughput'].values
-        np.random.seed(42)
-        be_base = np.where((t_ms >= 200) & (t_ms < 400) | (t_ms >= 600) & (t_ms < 800), 25.0,
-                  np.where((t_ms >= 0) & (t_ms < 200) | (t_ms >= 800) & (t_ms < 1200) | (t_ms >= 1400) & (t_ms < 1800), 15.0, 0.0))
-        be_tp = be_base + np.where(be_base > 0, np.random.normal(0, 0.6, size=len(t_ms)), 0)
-
-        plt.figure(figsize=(7, 4.5), dpi=300)
-        plt.plot(t_ms, be_tp, color='#ff6361', alpha=0.85, linewidth=1.2, label='BE')
-        plt.plot(t_ms, embb_tp, color='#2f4b7c', alpha=0.85, linewidth=1.2, label='eMBB')
-        plt.plot(t_ms, urllc_tp, color='#7a5195', alpha=0.85, linewidth=1.2, label='URLLC')
-
-        plt.xlabel('Time (ms)')
-        plt.ylabel('Requested throughput (Mbps)')
-        plt.xlim(0, 2000)
-        plt.ylim(-1, 30)
-        plt.grid(True, linestyle='-', alpha=0.5)
-        plt.legend(loc='upper right', frameon=True, edgecolor='black', facecolor='white')
-
-        plt.savefig('/home/ngnlab/openairinterface5g/Testbed_Throughput_Time.png', dpi=1000, bbox_inches='tight')
-        plt.savefig('/home/ngnlab/openairinterface5g/Testbed_Throughput_Time.pdf', bbox_inches='tight')
-        plt.close()
-        print("Re-generated Testbed_Results.png & Testbed_Throughput_Time.png successfully!")
     except Exception as e:
         print(f"[WARNING] Failed to auto-generate plot: {e}")
 
