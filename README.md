@@ -49,7 +49,7 @@ As 5G-Advanced and 6G networks evolve toward **Integrated Sensing and Communicat
 │   │   └── flexric           # FlexRIC Near-RT RIC & Python SWIG (xapp_sdk)
 │   │
 │   └── LAYER2
-│   	└── NR_MAC_gNB
+│   	└── MAC
 │        	├── slicing
 │        	│   └── slicing.c     	 <-- NVS Subcarrier Reservation
 │           └── gNB_scheduler_dlsch.c <-- Downlink MAC Scheduler & DLSCH PDU Assembly
