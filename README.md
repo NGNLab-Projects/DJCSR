@@ -20,49 +20,57 @@ As 5G-Advanced and 6G networks evolve toward **Integrated Sensing and Communicat
 ## 📂 Repository Structure
 
 ```
-├── Train_Model
-│   ├── agent.py              # D3QN Agent
-│   ├── environment.py        # 5G ISAC Network Simulation Environment
-│   └── train.py              # Training loop & evaluation script
-├── OAI_FlexRIC
-│   ├── generate_traffic.sh   # iperf3 & ping traffic generator script
-│   └── launch_topology.py    # OAI 5G NR RFSimulator Multi-gNB & UE launcher
-│   └── d3qn_isac_final.pth   # Trained Inference
-├── examples                  # xApp for RAN Slicing and information monitor
-│   ├── emulator             
-│   ├── ric                   # RIC including E2 interface
-│   └── xApp                  # Source code for xApps
-│       ├── c                 # xApps based on C code
-│       └── python3           # xApps based on Python code
-│           └── xapp_isac.py  # Source code for OAI FlexRIC E2 xApp D3QN Controller
-├── oai-workshops
-│   ├── cn
-│   └── ran
-│       └── conf
-│    		└── isac_setup	  # gNBs and UEs Configuration
-├── openair2
-│   ├── E2AP
-│   │   ├── RAN_FUNCTION
-│   │   │   └── CUSTOMIZED	  # Monitor Functions
-│   │   │       ├── ran_func_mac.c   <-- Thread-safe MAC stats harvester
-│   │   │       └── ran_func_kpm.c   <-- RLC SDU delay & UE metrics
-│   │   └── flexric           # FlexRIC Near-RT RIC & Python SWIG (xapp_sdk)
-│   │
-│   └── LAYER2
-│   	└── MAC
-│        	├── slicing
-│        	│   └── slicing.c     	 <-- NVS Subcarrier Reservation
-│           └── gNB_scheduler_dlsch.c <-- Downlink MAC Scheduler & DLSCH PDU Assembly
-├── Metrics					  # OAI/FlexRIC Metrics
-│   ├── plot_metrics.py       # Plot the metrics
-│   ├── metrics.csv           # Metrics of each epoch
-├── fig						  # OAI/FlexRIC Testbed results
-├── requirement.txt           # Necessary Libraries and Packages
-├── .gitignore                # Git ignore rules
-├── CMakeLists.txt            # CMakeLists
-├── LICENSE                	  # Licence
-├── flexric.conf              # FlexRIC Configurations
-└── README.md                 # Project documentation
+DJCSR/
+├── Train_Model/                     # Offline D3QN training (pure simulation, no RIC/E2)
+│   ├── environment.py               # ISACEnvironment: 3-gNB ISAC channel + sensing model, 16-dim state
+│   ├── agent.py                     # Dueling Double DQN (D3QN), replay buffer, Double-DQN target
+│   └── train.py                     # Training + evaluation loop -> d3qn_isac_best.pth / d3qn_isac_final.pth
+├── OAI_FlexRIC/
+│   ├── launch_topology.py           # Launches 3 gNBs + 10 namespaced UEs on the OAI RF simulator
+│   ├── generate_traffic.sh          # Background ping traffic per UE namespace
+│   └── d3qn_isac_final.pth          # Trained checkpoint loaded by the live xApp
+├── Metrics/
+│   ├── plot_metrics.py              # Renders throughput / latency / sensing-RMSE plots from a metrics CSV
+│   └── live_metrics.csv             # Per-epoch metrics written by the live xApp
+├── examples/                        # Vendored FlexRIC examples (unmodified except the added xapp_isac.py)
+│   ├── emulator/                    # E2 node emulators (synthetic RAN)
+│   ├── ric/                         # nearRT-RIC executable (near_ric.c)
+│   └── xApp/
+│       ├── c/                       # C xApp examples (monitor, ctrl, slice, tc, kpm_rc, ...)
+│       └── python3/
+│           └── xapp_isac.py         # OFFLINE variant: steps ISACEnvironment only, no E2 (not for testbed runs)
+├── openair2/                        # Partial OAI overlay - NOT built by this repo's CMake;
+│   │                                #   must be copied over an openairinterface5g source tree
+│   ├── E2AP/
+│   │   ├── RAN_FUNCTION/
+│   │   │   ├── init_ran_func.c           # Registers KPM/RC + custom MAC/RLC/PDCP/GTP/SLICE/TC callbacks
+│   │   │   ├── CUSTOMIZED/               # FlexRIC-custom (non-O-RAN) service-model handlers
+│   │   │   │   ├── ran_func_mac.c        # MAC UE stats harvester (scheduler-mutex protected)
+│   │   │   │   ├── ran_func_rlc.c        # RLC per-bearer stats: SDU delay, buffer occupancy, retx
+│   │   │   │   ├── ran_func_slice.c      # SLICE control handler - currently logs ADD/DEL/ASSOC + returns ACK only
+│   │   │   │   └── ran_func_{pdcp,gtp,tc}.c
+│   │   │   └── O-RAN/                    # O-RAN-standard service models
+│   │   │       ├── ran_func_kpm.c / ran_func_kpm_subs.c   # E2SM-KPM measurements + subscriptions
+│   │   │       └── ran_func_rc.c  / ran_func_rc_subs.c    # E2SM-RC
+│   │   └── flexric/                 # Full vendored FlexRIC copy that the OAI build links against
+│   │       └── examples/xApp/python3/xapp_isac.py         # LIVE E2 xApp: D3QN inference -> SLICE control
+│   ├── E3AP/                        # E3 (real-time RIC / dApp) interface
+│   └── LAYER2/
+│       ├── NR_MAC_gNB/
+│       │   └── gNB_scheduler_dlsch.c    # NR downlink scheduler - UNMODIFIED; target for slice-quota actuation
+│       └── MAC/slicing/                 # LTE slicer (NVS/EDF) - vendored, unused by the NR path
+├── oai-workshops/                   # OAI CN5G + RAN deployment helpers
+│   ├── cn/                          # 5G core docker-compose
+│   └── ran/conf/isac_setup/         # gnb1-3.conf, ue1-10.conf for the ISAC topology
+├── src/  test/                      # Vendored upstream FlexRIC platform (identical to mosaic5g dev, v2.0.0)
+├── docker/  openshift/              # Deployment scaffolding
+├── multiRAT/  multiRIC/             # Upstream FlexRIC multi-RAT / multi-RIC notes
+├── CMakeLists.txt                   # Builds src/ examples/ test/ only (does NOT build openair2/)
+├── flexric.conf                     # Near-RT RIC / xApp DB configuration
+├── requirements.txt                 # Python dependencies (D3QN training + xApp)
+├── Ngn-project.md                   # Implementation-status + architecture reference (kept accurate)
+├── LICENSE                          # CSSL v1.0 (inherited from OAI / FlexRIC)
+└── README.md
 ```
 
 ## 🛠️ System Parameters
