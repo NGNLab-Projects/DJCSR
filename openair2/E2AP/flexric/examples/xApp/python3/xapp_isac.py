@@ -6,12 +6,11 @@ import numpy as np
 import os
 
 import sys
-<<<<<<< HEAD:openair2/E2AP/flexric/examples/xApp/python3/xapp_isac.py
-sys.path.append('/openairinterface5g')
-sys.path.append('/openairinterface5g/openair2/E2AP/flexric/build/src/xApp/swig')
-=======
 from pathlib import Path
 
+# Resolve everything relative to the repository root so the xApp is machine independent.
+# This file lives at <root>/openair2/E2AP/flexric/examples/xApp/python3/xapp_isac.py,
+# so parents[6] is the DJCSR repository root.
 PROJECT_ROOT = Path(__file__).resolve().parents[6]
 TRAIN_MODEL_DIR = PROJECT_ROOT / "Train_Model"
 SWIG_DIR = Path(os.environ["FLEXRIC_SWIG_DIR"]) if "FLEXRIC_SWIG_DIR" in os.environ else None
@@ -19,7 +18,6 @@ SWIG_DIR = Path(os.environ["FLEXRIC_SWIG_DIR"]) if "FLEXRIC_SWIG_DIR" in os.envi
 sys.path.insert(0, str(TRAIN_MODEL_DIR))
 if SWIG_DIR is not None:
     sys.path.insert(0, str(SWIG_DIR))
->>>>>>> 96498cbe509311274ca7c9a858744389787155e6:openair2/E2AP/flexric/examples/xApp/python3/xapp_isac.py
 
 import xapp_sdk as ric
 import time
@@ -75,19 +73,45 @@ class D3QN(nn.Module):
 # Load Model and Env
 # -----------------------------------------------------------------------------
 isac_env = ISACEnvironment()
+# NOTE (DJCSR): ISACEnvironment.__init__ does not create the subcarrier-allocation state;
+# sensing_sc / embb_sc / urllc_sc are only assigned inside reset(). get_isac_state() reads
+# those attributes for its fallback state vector, so without this call the xApp aborts with
+# AttributeError: 'ISACEnvironment' object has no attribute 'urllc_sc' on the first step.
+# reset() only seeds the allocation split here; the live E2 telemetry still drives the state.
+isac_env.reset()
+
+# -----------------------------------------------------------------------------
+# Simulated-grid -> real-grid subcarrier/PRB conversion
+# -----------------------------------------------------------------------------
+# isac_env.N_sc (780) is the simulator's own subcarrier grid, used only so the D3QN
+# policy has a per-subcarrier reward signal (sensing FIM/CRLB, per-SC SINR, etc).
+# It does NOT match the real gNB's resource grid: DJCSR's own ISAC configuration
+# (oai-workshops/ran/conf/isac_setup/gnb1.conf) sets dl_carrierBandwidth = 106 PRBs.
+# The E2 SLICE service model (flexric/src/sm/slice_sm/ie/slice_data_ie.h,
+# nvs_capacity_u) can only carry one float, `pct_reserved` — a fraction of the RAN's
+# real PRB pool, not a subcarrier list or count. So the D3QN's subcarrier-count
+# decision is first turned into a fraction (grid-independent), and that fraction is
+# then re-expanded here against the REAL grid to get the actual subcarrier/PRB counts
+# that a correctly-implemented ran_func_slice.c would need to reserve. This is for
+# visibility/logging (see Vijay_docs/05_Subcarrier_vs_PRB_Granularity.md) — the E2
+# message itself still only carries the fraction, because that field is all the wire
+# format has room for.
+SC_PER_PRB = 12
+REAL_N_RB = 106                      # from gnb1.conf: dl_carrierBandwidth = 106
+REAL_N_SC = REAL_N_RB * SC_PER_PRB   # 1272 real subcarriers
+
+
+def sim_ratio_to_real_grid(ratio):
+    """Convert a [0,1] slice fraction (as sent in pct_reserved) into the equivalent
+    subcarrier count and PRB count on the REAL 106-PRB grid, not the 780-subcarrier
+    simulator grid the fraction was derived from."""
+    real_sc = int(round(ratio * REAL_N_SC))
+    real_prb = int(round(ratio * REAL_N_RB))
+    return real_sc, real_prb
+
 
 # Load the Trained Model
-<<<<<<< HEAD:openair2/E2AP/flexric/examples/xApp/python3/xapp_isac.py
-script_dir = os.path.dirname(os.path.abspath(__file__))
-ckpt_paths = [
-    os.path.abspath(os.path.join(script_dir, "../../../OAI_FlexRIC/d3qn_isac_final.pth")),
-    os.path.abspath(os.path.join(script_dir, "../../OAI_FlexRIC/d3qn_isac_final.pth")),
-    "/home/d3qn_isac_final.pth",
-    "d3qn_isac_final.pth"]
-ckpt_path = next((p for p in ckpt_paths if os.path.exists(p)), None)
-=======
 ckpt_path = PROJECT_ROOT / "OAI_FlexRIC" / "d3qn_isac_final.pth"
->>>>>>> 96498cbe509311274ca7c9a858744389787155e6:openair2/E2AP/flexric/examples/xApp/python3/xapp_isac.py
 
 STATE_DIM = isac_env.state_dim
 ACTION_DIM = isac_env.action_dim
@@ -328,8 +352,10 @@ def save_testbed_results_plot():
         axs[2].legend(fontsize=6.5, loc='upper right')
 
         plt.tight_layout()
-        pdf_path = '/openairinterface5g/fig/Testbed_Results.pdf'
-        png_path = '/openairinterface5g/fig/Testbed_Results.png'
+        fig_dir = PROJECT_ROOT / "fig"
+        fig_dir.mkdir(parents=True, exist_ok=True)
+        pdf_path = str(fig_dir / 'Testbed_Results.pdf')
+        png_path = str(fig_dir / 'Testbed_Results.png')
         plt.savefig(pdf_path, format='pdf', bbox_inches='tight')
         plt.savefig(png_path, format='png', dpi=1000, bbox_inches='tight')
         plt.close(fig)
@@ -367,22 +393,40 @@ if __name__ == "__main__":
         
         # Setup CSV Logging (Append/Resume Mode)
         csv_path = PROJECT_ROOT / "Metrics" / "live_metrics.csv"
+        CSV_HEADER = ['iteration', 'embb_throughput', 'urllc_throughput', 'urllc_latency',
+                      'prb_embb', 'prb_urllc',
+                      'sim_embb_sc', 'sim_urllc_sc', 'sim_total_sc',
+                      'real_embb_sc', 'real_urllc_sc', 'real_embb_prb', 'real_urllc_prb', 'real_total_prb',
+                      'rmse', 'crlb']
         file_exists = os.path.exists(csv_path) and os.path.getsize(csv_path) > 0
         start_episode = 1
-        
+
         if file_exists:
             with open(csv_path, 'r') as f:
                 lines = [l for l in f.readlines() if l.strip()]
-                if len(lines) > 1:
-                    start_episode = len(lines) # Resume from next episode
+            # NOTE (DJCSR): the sc/PRB columns above are a schema change. A CSV written
+            # by the pre-conversion xApp has a different (shorter) header, so appending
+            # to it would misalign every column. Detect that and archive it instead of
+            # silently corrupting the file.
+            header_matches = bool(lines) and lines[0].strip() == ",".join(CSV_HEADER)
+            if not header_matches:
+                archive_dir = PROJECT_ROOT / "Metrics" / "archive"
+                archive_dir.mkdir(parents=True, exist_ok=True)
+                archived_to = archive_dir / f"live_metrics_pre_sc_conversion_{int(time.time())}.csv"
+                os.replace(csv_path, archived_to)
+                print(f"[INFO] Existing CSV used an older schema; archived to {archived_to} and starting fresh.")
+                lines = []
+            if len(lines) > 1:
+                start_episode = len(lines) # Resume from next episode
+
+        if start_episode > 1:
             csv_file = open(csv_path, 'a', newline='')
             csv_writer = csv.writer(csv_file)
             print(f'[INFO] Resuming CSV logging from episode {start_episode}...')
         else:
             csv_file = open(csv_path, 'w', newline='')
             csv_writer = csv.writer(csv_file)
-            csv_writer.writerow(['iteration', 'embb_throughput', 'urllc_throughput', 'urllc_latency',
-                                 'prb_embb', 'prb_urllc', 'rmse', 'crlb'])
+            csv_writer.writerow(CSV_HEADER)
             print('[INFO] CSV logging initialized – fresh file created.')
         
         EPISODE_LENGTH = 5
@@ -397,7 +441,13 @@ if __name__ == "__main__":
             ep_crlb = []
             ep_prb_e = []
             ep_prb_u = []
-            
+            ep_sim_sc_e = []
+            ep_sim_sc_u = []
+            ep_real_sc_e = []
+            ep_real_sc_u = []
+            ep_real_prb_e = []
+            ep_real_prb_u = []
+
             for step in range(EPISODE_LENGTH):
                 # 1. Get State (Live from E2 Telemetry)
                 state = state_tracker.get_isac_state()
@@ -419,6 +469,18 @@ if __name__ == "__main__":
                 prb_urllc = float(urllc_sc / total_sc)
                 pwr_sense, pwr_urllc, pwr_embb = isac_env.power_ratios[power_idx]
 
+                # 3b. Requested subcarrier count, on the SIMULATOR's own grid (780 SC) --
+                # this is the count the D3QN policy actually reasoned about.
+                sim_embb_sc = int(round(embb_sc))
+                sim_urllc_sc = int(round(urllc_sc))
+
+                # 3c. The same decision re-expanded on the REAL RAN grid (106 PRB /
+                # 1272 SC, see sim_ratio_to_real_grid above) -- this is the count that
+                # would actually need to be reserved for the fraction sent over E2 to
+                # mean what the policy intended.
+                real_embb_sc, real_embb_prb = sim_ratio_to_real_grid(prb_embb)
+                real_urllc_sc, real_urllc_prb = sim_ratio_to_real_grid(prb_urllc)
+
                 # 4. Extract live E2 metrics for logging.
                 total_sc = float(isac_env.N_sc)
                 metrics = state_tracker.metrics
@@ -427,6 +489,12 @@ if __name__ == "__main__":
                 ep_urllc_lat.append(metrics["urllc"]["latency"])
                 ep_prb_e.append(prb_embb)
                 ep_prb_u.append(prb_urllc)
+                ep_sim_sc_e.append(sim_embb_sc)
+                ep_sim_sc_u.append(sim_urllc_sc)
+                ep_real_sc_e.append(real_embb_sc)
+                ep_real_sc_u.append(real_urllc_sc)
+                ep_real_prb_e.append(real_embb_prb)
+                ep_real_prb_u.append(real_urllc_prb)
                 ep_rmse.append(float("nan"))
                 ep_crlb.append(float("nan"))
 
@@ -463,12 +531,27 @@ if __name__ == "__main__":
             avg_crlb = np.mean(ep_crlb) if ep_crlb else 0.0
             avg_prb_e = np.mean(ep_prb_e)
             avg_prb_u = np.mean(ep_prb_u)
+            avg_sim_sc_e = np.mean(ep_sim_sc_e)
+            avg_sim_sc_u = np.mean(ep_sim_sc_u)
+            avg_real_sc_e = np.mean(ep_real_sc_e)
+            avg_real_sc_u = np.mean(ep_real_sc_u)
+            avg_real_prb_e = np.mean(ep_real_prb_e)
+            avg_real_prb_u = np.mean(ep_real_prb_u)
 
             # Log to CSV for plotting
-            csv_writer.writerow([episode, avg_embb, avg_urllc, avg_lat, avg_prb_e, avg_prb_u, avg_rmse, avg_crlb])
+            csv_writer.writerow([
+                episode, avg_embb, avg_urllc, avg_lat, avg_prb_e, avg_prb_u,
+                avg_sim_sc_e, avg_sim_sc_u, isac_env.N_sc,
+                avg_real_sc_e, avg_real_sc_u, avg_real_prb_e, avg_real_prb_u, REAL_N_RB,
+                avg_rmse, avg_crlb,
+            ])
             csv_file.flush()
 
-            print(f"Control Epoch {episode}/{MAX_EPISODES} (Live E2 Avg) | eMBB: {avg_embb:.2f} Mbps | URLLC: {avg_urllc:.2f} Mbps | Latency: {avg_lat:.2f} ms | RMSE: {avg_rmse:.4f} m | CRLB: {avg_crlb:.2f} m")
+            print(f"Control Epoch {episode}/{MAX_EPISODES} (Live E2 Avg) | eMBB: {avg_embb:.2f} Mbps | URLLC: {avg_urllc:.2f} Mbps | "
+                  f"Latency: {avg_lat:.2f} ms | RMSE: {avg_rmse:.4f} m | CRLB: {avg_crlb:.2f} m | "
+                  f"SC(sim {isac_env.N_sc}): eMBB {avg_sim_sc_e:.0f}/URLLC {avg_sim_sc_u:.0f} | "
+                  f"SC(real {REAL_N_SC}): eMBB {avg_real_sc_e:.0f}/URLLC {avg_real_sc_u:.0f} | "
+                  f"PRB(real {REAL_N_RB}): eMBB {avg_real_prb_e:.0f}/URLLC {avg_real_prb_u:.0f}")
             episode += 1
 
         print(f"\n[INFO] Successfully completed target of {MAX_EPISODES} control epochs! Gracefully stopping xApp...")

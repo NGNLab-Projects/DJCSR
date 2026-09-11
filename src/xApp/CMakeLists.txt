@@ -104,6 +104,17 @@ if(E2AP_ENCODING STREQUAL "ASN")
             $<TARGET_OBJECTS:e2_conv_obj>
             )
 
+          # NOTE (DJCSR): the static e42_xapp target links these, but e42_xapp_shared did not,
+          # so _xapp_sdk.so failed to load with "undefined symbol: asn_DEF_NR_UL_DCCH_Message".
+          # This mirrors the same fix already present in the nested copy of this file at
+          # openair2/E2AP/flexric/src/xApp/CMakeLists.txt.
+          target_link_libraries(e42_xapp_shared
+            PUBLIC
+            asn1_nr_rrc
+            sm_common_dec_asn_obj_rc
+            3gpp_derived_ie_dec_asn_obj_rc
+          )
+
 	 target_compile_options(e42_xapp_shared PRIVATE "-DASN_DISABLE_OER_SUPPORT" -fPIC)
 
 if(E2AP_VERSION STREQUAL "E2AP_V1")

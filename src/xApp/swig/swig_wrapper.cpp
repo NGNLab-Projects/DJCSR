@@ -23,6 +23,7 @@
 #include <cassert>
 #include <ctime>
 #include <cstdlib>
+#include <cstring>
 #include <pthread.h>
 #include <unistd.h>
 #include <iostream>
@@ -56,7 +57,26 @@ void init()
   char** argv = NULL;
   fr_args_t args = init_fr_args(argc, argv);
 
-  initialized = true; 
+  // NOTE (DJCSR): init() is called from Python with no argv, so the -c/-p command line
+  // options can never reach it and the service-model directory always falls back to the
+  // compiled-in /usr/local/lib/flexric/. That requires "sudo make install" and silently
+  // segfaults if a different FlexRIC version is installed there. Allow the xApp to be
+  // pointed at a build tree instead, which lets it run without root.
+  char const* sm_dir = getenv("FLEXRIC_SM_DIR");
+  if (sm_dir != NULL && strlen(sm_dir) > 0 && strlen(sm_dir) < FR_CONF_FILE_LEN) {
+    memset(args.libs_dir, '\0', FR_CONF_FILE_LEN);
+    strncpy(args.libs_dir, sm_dir, FR_CONF_FILE_LEN - 1);
+    printf("[xApp]: FLEXRIC_SM_DIR override, service models from %s\n", args.libs_dir);
+  }
+
+  char const* conf = getenv("FLEXRIC_CONF");
+  if (conf != NULL && strlen(conf) > 0 && strlen(conf) < FR_CONF_FILE_LEN) {
+    memset(args.conf_file, '\0', FR_CONF_FILE_LEN);
+    strncpy(args.conf_file, conf, FR_CONF_FILE_LEN - 1);
+    printf("[xApp]: FLEXRIC_CONF override, config file %s\n", args.conf_file);
+  }
+
+  initialized = true;
 
   init_xapp_api(&args);
 }

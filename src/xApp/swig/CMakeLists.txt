@@ -101,6 +101,15 @@ if(XAPP_TARGET_LANGUAGE STREQUAL "PYTHON_LANG")
 # I do not like this solution at all but it is not my code ...
 target_compile_options(xapp_sdk PRIVATE -Wno-missing-field-initializers -Wno-unused-parameter )
 
+  # NOTE (DJCSR): swig_wrapper.i still uses the Python 2 names PyInt_AsLong/PyInt_FromLong.
+  # SWIG <= 4.0 silently emitted these Py3 compat aliases; SWIG 4.1+ (we build with 4.5)
+  # no longer does, so the generated wrapper fails to compile against Python 3 headers.
+  # Re-add exactly the aliases old SWIG used - behaviour is unchanged.
+  target_compile_definitions(xapp_sdk PRIVATE
+    PyInt_AsLong=PyLong_AsLong
+    PyInt_FromLong=PyLong_FromLong
+    PyInt_Check=PyLong_Check)
+
 #GOLANG compilation
 elseif(XAPP_TARGET_LANGUAGE STREQUAL "GO_LANG")
   ADD_COMPILE_DEFINITIONS(XAPP_LANG_GO)

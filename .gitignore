@@ -27,3 +27,8 @@ __pycache__/
 venv/
 env/
 .venv/
+
+# CMake build tree (generated from CMakeLists.txt + src/ — never commit)
+build/
+compile_commands.json
+log.txt
